@@ -40,3 +40,6 @@ data/vintage_compare.json
 # --- 応募デッキ専用の照合ツール（デッキ本体を公開しないので単体では動かない） ---
 scripts/check_deck.py
 scripts/deck_targets.py
+
+# --- 旧版の構造説明ページ（2026-08-30時点の数値。README とビューアに置き換え済み） ---
+docs/system.html
