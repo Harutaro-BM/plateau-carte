@@ -1,0 +1,19 @@
+{
+ "nOld": 306,
+ "nNew": 306,
+ "nBoth": 306,
+ "shifts": {
+  "-2": 2,
+  "-1": 140,
+  "0": 2283,
+  "1": 23
+ },
+ "movedByKey": {
+  "usage": 60,
+  "storeys": 36,
+  "year_of_construction": 22,
+  "survey_year": 23,
+  "measured_height": 24
+ },
+ "changedRatio": 0.0674
+}

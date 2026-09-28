@@ -1,0 +1,410 @@
+[
+ {
+  "code": "13101",
+  "label": "千代田区",
+  "year": 2025,
+  "nBldg": 38743,
+  "resShare": 0.4424,
+  "storeysFill": 0.8996,
+  "usageFill": 1.0,
+  "nAreas": 106,
+  "popTotal": 66583.0,
+  "k_storeys": 0.01498152133531947,
+  "k_height": 0.012467891663284872,
+  "r_fa_st": 0.9105,
+  "r_fa_h": 0.8979,
+  "r_foot": 0.9445,
+  "holdout_fa_st": {
+   "mape": 41.07,
+   "medianAPE": 24.64
+  },
+  "holdout_fa_h": {
+   "mape": 45.11,
+   "medianAPE": 31.93
+  },
+  "holdout_foot": {
+   "mape": 41.5,
+   "medianAPE": 28.17
+  },
+  "mesh": {
+   "n": 5,
+   "r": 0.9564,
+   "mape": 15.48,
+   "medianAPE": 16.98
+  }
+ },
+ {
+  "code": "13117",
+  "label": "北区",
+  "year": 2025,
+  "nBldg": 130580,
+  "resShare": 0.8235,
+  "storeysFill": 0.9131,
+  "usageFill": 1.0,
+  "nAreas": 113,
+  "popTotal": 355213.0,
+  "k_storeys": 0.020515612754235208,
+  "k_height": 0.018243761028995102,
+  "r_fa_st": 0.9731,
+  "r_fa_h": 0.9736,
+  "r_foot": 0.778,
+  "holdout_fa_st": {
+   "mape": 10.71,
+   "medianAPE": 8.22
+  },
+  "holdout_fa_h": {
+   "mape": 10.46,
+   "medianAPE": 8.08
+  },
+  "holdout_foot": {
+   "mape": 27.16,
+   "medianAPE": 24.91
+  },
+  "mesh": {
+   "n": 43,
+   "r": 0.9496,
+   "mape": 11.15,
+   "medianAPE": 8.39
+  }
+ },
+ {
+  "code": "13209",
+  "label": "町田市",
+  "year": 2025,
+  "nBldg": 150762,
+  "resShare": 0.792,
+  "storeysFill": 0.8486,
+  "usageFill": 1.0,
+  "nAreas": 195,
+  "popTotal": 431079.0,
+  "k_storeys": 0.018497364951823195,
+  "k_height": 0.014718129581283676,
+  "r_fa_st": 0.9825,
+  "r_fa_h": 0.9706,
+  "r_foot": 0.9359,
+  "holdout_fa_st": {
+   "mape": 14.86,
+   "medianAPE": 8.44
+  },
+  "holdout_fa_h": {
+   "mape": 18.91,
+   "medianAPE": 11.76
+  },
+  "holdout_foot": {
+   "mape": 28.79,
+   "medianAPE": 23.22
+  },
+  "mesh": {
+   "n": 98,
+   "r": 0.9794,
+   "mape": 23.58,
+   "medianAPE": 11.14
+  }
+ },
+ {
+  "code": "13225",
+  "label": "稲城市",
+  "year": 2025,
+  "nBldg": 34217,
+  "resShare": 0.7094,
+  "storeysFill": 0.794,
+  "usageFill": 1.0,
+  "nAreas": 33,
+  "popTotal": 93151.0,
+  "k_storeys": 0.019649607074305745,
+  "k_height": 0.01630155484188431,
+  "r_fa_st": 0.9759,
+  "r_fa_h": 0.9577,
+  "r_foot": 0.8868,
+  "holdout_fa_st": {
+   "mape": 15.9,
+   "medianAPE": 13.2
+  },
+  "holdout_fa_h": {
+   "mape": 20.7,
+   "medianAPE": 14.43
+  },
+  "holdout_foot": {
+   "mape": 40.95,
+   "medianAPE": 31.45
+  },
+  "mesh": {
+   "n": 16,
+   "r": 0.9837,
+   "mape": 35.19,
+   "medianAPE": 14.53
+  }
+ },
+ {
+  "code": "11227",
+  "label": "朝霞市",
+  "year": 2025,
+  "nBldg": 37887,
+  "resShare": 0.7887,
+  "storeysFill": 0.9598,
+  "usageFill": 1.0,
+  "nAreas": 76,
+  "popTotal": 140356.0,
+  "k_storeys": 0.019435989077427232,
+  "k_height": 0.016410000559915445,
+  "r_fa_st": 0.9812,
+  "r_fa_h": 0.9744,
+  "r_foot": 0.8819,
+  "holdout_fa_st": {
+   "mape": 21.41,
+   "medianAPE": 9.58
+  },
+  "holdout_fa_h": {
+   "mape": 24.03,
+   "medianAPE": 11.09
+  },
+  "holdout_foot": {
+   "mape": 35.03,
+   "medianAPE": 22.0
+  },
+  "mesh": {
+   "n": 23,
+   "r": 0.9752,
+   "mape": 18.97,
+   "medianAPE": 9.09
+  }
+ },
+ {
+  "code": "11243",
+  "label": "吉川市",
+  "year": 2023,
+  "nBldg": 30450,
+  "resShare": 0.8052,
+  "storeysFill": 0.9547,
+  "usageFill": 1.0,
+  "nAreas": 90,
+  "popTotal": 71979.0,
+  "k_storeys": 0.016373088128791163,
+  "k_height": 0.013096884521210694,
+  "r_fa_st": 0.927,
+  "r_fa_h": 0.9194,
+  "r_foot": 0.8487,
+  "holdout_fa_st": {
+   "mape": 76.4,
+   "medianAPE": 44.81
+  },
+  "holdout_fa_h": {
+   "mape": 80.24,
+   "medianAPE": 52.61
+  },
+  "holdout_foot": {
+   "mape": 101.02,
+   "medianAPE": 71.87
+  },
+  "mesh": {
+   "n": 38,
+   "r": 0.9829,
+   "mape": 69.76,
+   "medianAPE": 29.17
+  }
+ },
+ {
+  "code": "22219",
+  "label": "下田市",
+  "year": 2023,
+  "nBldg": 18456,
+  "resShare": 0.6448,
+  "storeysFill": 0.6848,
+  "usageFill": 1.0,
+  "nAreas": 45,
+  "popTotal": 20183.0,
+  "k_storeys": 0.016028223268710867,
+  "k_height": 0.013334910204248828,
+  "r_fa_st": 0.9488,
+  "r_fa_h": 0.9471,
+  "r_foot": 0.9519,
+  "holdout_fa_st": {
+   "mape": 43.89,
+   "medianAPE": 20.79
+  },
+  "holdout_fa_h": {
+   "mape": 44.12,
+   "medianAPE": 19.79
+  },
+  "holdout_foot": {
+   "mape": 42.98,
+   "medianAPE": 18.47
+  },
+  "mesh": {
+   "n": 54,
+   "r": 0.9502,
+   "mape": 39.42,
+   "medianAPE": 15.5
+  }
+ },
+ {
+  "code": "02321",
+  "label": "鰺ヶ沢町",
+  "year": 2025,
+  "nBldg": 4247,
+  "resShare": 0.6885,
+  "storeysFill": 0.8109,
+  "usageFill": 1.0,
+  "nAreas": 14,
+  "popTotal": 5289.0,
+  "k_storeys": 0.009544035465051118,
+  "k_height": 0.007999045377681528,
+  "r_fa_st": 0.9813,
+  "r_fa_h": 0.9818,
+  "r_foot": 0.982,
+  "holdout_fa_st": {
+   "mape": 62.11,
+   "medianAPE": 73.4
+  },
+  "holdout_fa_h": {
+   "mape": 60.47,
+   "medianAPE": 67.05
+  },
+  "holdout_foot": {
+   "mape": 60.11,
+   "medianAPE": 69.67
+  },
+  "mesh": {
+   "n": 8,
+   "r": 0.5868,
+   "mape": 43.86,
+   "medianAPE": 26.02
+  }
+ },
+ {
+  "code": "05204",
+  "label": "大館市",
+  "year": 2024,
+  "nBldg": 27429,
+  "resShare": 0.5296,
+  "storeysFill": 0.8435,
+  "usageFill": 1.0,
+  "nAreas": 82,
+  "popTotal": 37213.0,
+  "k_storeys": 0.013730994566344398,
+  "k_height": 0.009958762646020193,
+  "r_fa_st": 0.8882,
+  "r_fa_h": 0.8864,
+  "r_foot": 0.8862,
+  "holdout_fa_st": {
+   "mape": 39.77,
+   "medianAPE": 34.33
+  },
+  "holdout_fa_h": {
+   "mape": 46.24,
+   "medianAPE": 33.45
+  },
+  "holdout_foot": {
+   "mape": 40.93,
+   "medianAPE": 32.3
+  },
+  "mesh": {
+   "n": 36,
+   "r": 0.9038,
+   "mape": 54.1,
+   "medianAPE": 45.74
+  }
+ },
+ {
+  "code": "07203",
+  "label": "郡山市",
+  "year": 2020,
+  "nBldg": 134206,
+  "resShare": 0.6868,
+  "storeysFill": 0.8074,
+  "usageFill": 1.0,
+  "nAreas": 730,
+  "popTotal": 276637.0,
+  "k_storeys": 0.016194352318781087,
+  "k_height": 0.013098451646698105,
+  "r_fa_st": 0.9379,
+  "r_fa_h": 0.9366,
+  "r_foot": 0.9156,
+  "holdout_fa_st": {
+   "mape": 40.66,
+   "medianAPE": 25.1
+  },
+  "holdout_fa_h": {
+   "mape": 42.66,
+   "medianAPE": 24.54
+  },
+  "holdout_foot": {
+   "mape": 47.78,
+   "medianAPE": 28.1
+  },
+  "mesh": {
+   "n": 90,
+   "r": 0.9164,
+   "mape": 17.59,
+   "medianAPE": 12.93
+  }
+ },
+ {
+  "code": "08234",
+  "label": "鉾田市",
+  "year": 2022,
+  "nBldg": 66699,
+  "resShare": 0.0322,
+  "storeysFill": 0.0496,
+  "usageFill": 1.0,
+  "nAreas": 63,
+  "popTotal": 45953.0,
+  "k_storeys": 0.20068635055061768,
+  "k_height": 0.08300539761776511,
+  "r_fa_st": 0.4668,
+  "r_fa_h": 0.4629,
+  "r_foot": 0.4644,
+  "holdout_fa_st": {
+   "mape": 209.01,
+   "medianAPE": 100.0
+  },
+  "holdout_fa_h": {
+   "mape": 209.29,
+   "medianAPE": 100.0
+  },
+  "holdout_foot": {
+   "mape": 209.84,
+   "medianAPE": 100.0
+  },
+  "mesh": {
+   "n": 304,
+   "r": 0.732,
+   "mape": 137.8,
+   "medianAPE": 100.0
+  }
+ },
+ {
+  "code": "12217",
+  "label": "柏市",
+  "year": 2020,
+  "nBldg": 169223,
+  "resShare": 0.6498,
+  "storeysFill": 0.896,
+  "usageFill": 1.0,
+  "nAreas": 307,
+  "popTotal": 426468.0,
+  "k_storeys": 0.021422395890545634,
+  "k_height": 0.016601288947604723,
+  "r_fa_st": 0.9166,
+  "r_fa_h": 0.9137,
+  "r_foot": 0.8777,
+  "holdout_fa_st": {
+   "mape": 32.61,
+   "medianAPE": 21.1
+  },
+  "holdout_fa_h": {
+   "mape": 35.66,
+   "medianAPE": 18.0
+  },
+  "holdout_foot": {
+   "mape": 44.9,
+   "medianAPE": 27.96
+  },
+  "mesh": {
+   "n": 225,
+   "r": 0.8938,
+   "mape": 38.73,
+   "medianAPE": 19.82
+  }
+ }
+]

@@ -1,0 +1,230 @@
+<meta charset="utf-8">
+<title>PLATEAUカルテ</title>
+<style>
+  :root{
+    --bg:#fbfbfa; --fg:#1a1a19; --muted:#6b6b66; --line:#e2e2dd;
+    --card:#fff; --accent:#2f6f4f;
+    --g4:#1f7a4d; --g3:#5c9a3a; --g2:#c08a1e; --g1:#c0651e; --g0:#a33;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#16181a; --fg:#e8e8e4; --muted:#9a9a94; --line:#2c2f33;
+      --card:#1d2023; --accent:#6fbf95;
+      --g4:#4fbf85; --g3:#8ec95f; --g2:#e0b040; --g1:#e08a4a; --g0:#e06a6a;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#16181a; --fg:#e8e8e4; --muted:#9a9a94; --line:#2c2f33;
+    --card:#1d2023; --accent:#6fbf95;
+    --g4:#4fbf85; --g3:#8ec95f; --g2:#e0b040; --g1:#e08a4a; --g0:#e06a6a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font-family:-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+    line-height:1.7;font-size:15px}
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 20px 80px}
+  h1{font-size:1.7rem;margin:0 0 4px;letter-spacing:.01em}
+  .sub{color:var(--muted);margin:0 0 28px}
+  .lead{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:18px 20px;margin:0 0 24px}
+  .lead p{margin:0 0 10px}
+  .lead p:last-child{margin:0}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 22px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:9px;
+    padding:11px 16px;min-width:132px}
+  .stat b{display:block;font-size:1.45rem;line-height:1.25;color:var(--accent)}
+  .stat span{color:var(--muted);font-size:.83rem}
+  .ctl{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:0 0 14px}
+  input[type=search],select{background:var(--card);color:var(--fg);
+    border:1px solid var(--line);border-radius:7px;padding:7px 11px;font:inherit;font-size:.9rem}
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+  table{border-collapse:collapse;width:100%;font-size:.88rem;min-width:900px}
+  th,td{padding:7px 9px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+  th{position:sticky;top:0;background:var(--card);font-weight:600;cursor:pointer;
+    font-size:.8rem;color:var(--muted);z-index:1}
+  th:hover{color:var(--fg)}
+  tbody tr:hover{background:color-mix(in srgb,var(--accent) 7%,transparent)}
+  td.g{text-align:center;font-weight:700;font-size:1rem}
+  .G4{color:var(--g4)} .G3{color:var(--g3)} .G2{color:var(--g2)}
+  .G1{color:var(--g1)} .G0{color:var(--g0)} .Gx{color:var(--muted)}
+  td.can{text-align:center}
+  .yes{color:var(--g4);font-weight:700}
+  .no{color:var(--muted)}
+  .num{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+  h2{font-size:1.12rem;margin:34px 0 10px}
+  .note{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--g2);
+    border-radius:8px;padding:15px 18px;margin:14px 0}
+  .note p{margin:0 0 9px} .note p:last-child{margin:0}
+  code{background:color-mix(in srgb,var(--fg) 8%,transparent);padding:1px 5px;border-radius:4px;
+    font-size:.87em}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;color:var(--muted);font-size:.85rem;margin:10px 0 18px}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:.83rem}
+  a{color:var(--accent)}
+
+/* 全国地図。縦長なので幅を絞って中央に置く */
+.mapbox { margin: 6px 0 22px; text-align: center; }
+.mapbox img { width: 100%; max-width: 620px; height: auto; }
+@media (max-width: 700px) { .mapbox img { max-width: 100%; } }
+</style>
+
+<div class="wrap">
+  <h1>PLATEAUカルテ</h1>
+  <p class="sub">3D都市モデルの属性が、自治体ごとに<strong>実際どれだけ入っているか</strong>の実測</p>
+
+  <div class="lead">
+    <p>公式が公表しているのは「その属性が<strong>仕様上あるか</strong>」の一覧（○×）です。実測すると
+      <strong>両方向に食い違います</strong>。建築年が○のいわき市は実測51.3%、白河市は37.8%。
+      逆に空欄の宗像市は86.2%、北九州市は85.0%（いずれも2020年度データ同士の比較）。
+      <strong>○だから使えるとも、空欄だから使えないとも言えません。</strong>
+      なおこの公式一覧は56都市ぶんで、最終更新は2021年8月6日。
+      PLATEAUは現在306自治体で、<strong>残る250自治体には参照できる一覧がありません</strong>。</p>
+    <p>このカルテは<strong>全国306自治体・2,409,305棟</strong>のCityGMLを実際に開いて、属性の充填率を測ったものです。
+      使う前に「自分の街でその分析が成り立つか」が分かります。</p>
+    <p><strong>ただしカルテは「始められるか」に答えるもので、「うまくいくか」は保証しません。</strong>
+      属性が揃っていることは必要条件であって十分条件ではありません。</p>
+  </div>
+
+  <h2>建築年が入っているかは、県の事情で決まっている</h2>
+  <div class="note" style="margin-bottom:10px">
+    自治体別に塗ると、色が<strong>県境で切り替わります</strong>。
+    東京都は62自治体すべてが0%、神奈川県も8自治体すべてが0%。
+    隣接する埼玉県は49自治体中36に建築年が入っています。<br>
+    <span style="color:var(--muted)">境界データ：国土数値情報 行政区域データ（国土交通省）を加工して作成。
+    県単位でまとまる分布は事実として観測されたもので、整備の発注単位が原因であることは未確認（推測）。</span>
+  </div>
+  <div class="mapbox"><img src="map.svg" alt="建築年の充填率を自治体別に塗った日本地図。東京都と神奈川県は全て0%だが、隣接する埼玉県は色が付く"></div>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="ctl">
+    <input type="search" id="q" placeholder="自治体名・コードで検索" style="min-width:220px">
+    <select id="pref"><option value="">都道府県：すべて</option></select>
+    <select id="can">
+      <option value="">できる分析：指定なし</option>
+      <option value="人口推定">人口推定ができる</option>
+      <option value="高さ解析">高さ解析ができる</option>
+      <option value="耐震_被害推定">耐震・被害推定ができる</option>
+      <option value="時系列比較">時系列比較ができる</option>
+    </select>
+  </div>
+
+  <div class="legend">
+    <span><b class="G4">◎</b> 90%以上</span>
+    <span><b class="G3">○</b> 60〜90%</span>
+    <span><b class="G2">△</b> 20〜60%</span>
+    <span><b class="G1">▲</b> 0〜20%</span>
+    <span><b class="G0">×</b> 0%（入っていない）</span>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr id="head"></tr></thead>
+      <tbody id="body"></tbody>
+    </table>
+  </div>
+
+  <h2>読み方</h2>
+  <div class="note">
+    <p><strong>段階評価にしている理由。</strong>全市を読んだ5都市で市域を10帯に分けて充填率のばらつきを測ったところ、
+      幅は1.6〜17.6ポイントでした。「94% 対 19.8%」の桁の差を判定するには十分ですが、
+      「94.1% 対 91.3%」の順位付けには足りません。だから小数ではなく段階で出しています。</p>
+    <p><strong>標本の取り方。</strong>1自治体あたり<strong>建物数の多い3メッシュ</strong>を読んでいます。
+      全メッシュを読むと306自治体で数十GBになり現実的でないためです。
+      なおメッシュをコード順に取ると市域の縁を引いて建物0件になります（実際に起きました）。
+      非圧縮サイズの大きいメッシュを選ぶことで回避しています。</p>
+    <p><strong>ダミー値。</strong><code>usage=461</code>（不明）、<code>storeysAboveGround=9999</code>、
+      <code>measuredHeight=-9999</code>、<code>surveyYear=0001</code> は
+      「値が入っているが情報が無い」ものなので、充填率から除いています。</p>
+    <p><strong>「年度」は整備年度で測量年ではありません。</strong>実際の測量年は
+      <code>uro:surveyYear</code> にあります。時系列で使うなら必ずこちらを見てください。</p>
+  </div>
+
+  <h2>できる分析の判定基準</h2>
+  <div class="note">
+    <p><strong>人口推定</strong>：用途60%以上 かつ 階数60%以上。用途で住宅を特定し、階数で床面積を作ります。
+      検証済みの手法では、低層密集市街地で国勢調査人口を中央値6.4〜6.7%の誤差で再現できました。</p>
+    <p><strong>高さ解析</strong>：高さ90%以上 かつ 高さ種別60%以上。
+      高さの値だけでは軒高か最高高さか分からないので、<code>lod1HeightType</code> が必要です。</p>
+    <p><strong>耐震・被害推定</strong>：建築年40%以上 かつ 構造種別60%以上。
+      新耐震（1981年6月）前後の判別と、木造/非木造の判別に使います。</p>
+    <p><strong>時系列比較</strong>：測量年60%以上。整備年度が違っても測量が同じなら現実の変化は含まれません。</p>
+  </div>
+
+  <footer>
+    出典：「3D都市モデル（Project PLATEAU）」（国土交通省／CC BY 4.0）を加工して作成。
+    自治体名は「3D都市モデル（Project PLATEAU）ポータルサイト」（G空間情報センター）の
+    データセット名から取得し加工して作成。<br>
+    <strong>本サイトに示す充填率は作成者が実測した値であり、国土交通省が公表した値ではありません。</strong>
+    実測日 2026-08-19。各自治体の最新年度データを対象。
+  </footer>
+</div>
+
+<script>
+const PREFS={"01":"北海道","02":"青森県","03":"岩手県","04":"宮城県","05":"秋田県","06":"山形県","07":"福島県","08":"茨城県","09":"栃木県","10":"群馬県","11":"埼玉県","12":"千葉県","13":"東京都","14":"神奈川県","15":"新潟県","16":"富山県","17":"石川県","18":"福井県","19":"山梨県","20":"長野県","21":"岐阜県","22":"静岡県","23":"愛知県","24":"三重県","25":"滋賀県","26":"京都府","27":"大阪府","28":"兵庫県","29":"奈良県","30":"和歌山県","31":"鳥取県","32":"島根県","33":"岡山県","34":"広島県","35":"山口県","36":"徳島県","37":"香川県","38":"愛媛県","39":"高知県","40":"福岡県","41":"佐賀県","42":"長崎県","43":"熊本県","44":"大分県","45":"宮崎県","46":"鹿児島県","47":"沖縄県"};
+const ATTRS=[["measured_height","高さ"],["usage","用途"],["storeys","階数"],["year_of_construction","建築年"],["structure_type","構造種別"],["fireproof","耐火構造"],["survey_year","測量年"],["lod1_height_type","高さ種別"]];
+const CANS=[["人口推定","人口"],["高さ解析","高さ解析"],["耐震_被害推定","耐震・被害"],["時系列比較","時系列"]];
+const GC={"◎":"G4","○":"G3","△":"G2","▲":"G1","×":"G0","-":"Gx"};
+let rows=[], sortKey="code", sortAsc=true;
+
+function head(){
+  const h=document.getElementById("head");
+  const cols=[["code","コード"],["name","自治体"],["pref","都道府県"],["year","年度"],["nSample","標本"]]
+    .concat(ATTRS.map(([k,l])=>["g_"+k,l]))
+    .concat(CANS.map(([k,l])=>["c_"+k,l]));
+  h.innerHTML=cols.map(([k,l])=>`<th data-k="${k}">${l}</th>`).join("");
+  h.querySelectorAll("th").forEach(th=>th.onclick=()=>{
+    const k=th.dataset.k;
+    if(sortKey===k) sortAsc=!sortAsc; else {sortKey=k; sortAsc=true;}
+    render();
+  });
+}
+function val(r,k){
+  if(k.startsWith("g_")) return "◎○△▲×-".indexOf(r.grade[k.slice(2)]);
+  if(k.startsWith("c_")) return r.can[k.slice(2)]?0:1;
+  if(k==="pref") return r.pref;
+  if(k==="name") return r.name||r.slug;
+  return r[k];
+}
+function render(){
+  const q=document.getElementById("q").value.trim().toLowerCase();
+  const p=document.getElementById("pref").value;
+  const c=document.getElementById("can").value;
+  let f=rows.filter(r=>r.status==="ok");
+  if(q) f=f.filter(r=>(r.name||"").toLowerCase().includes(q)||r.code.includes(q)||r.slug.includes(q));
+  if(p) f=f.filter(r=>r.code.slice(0,2)===p);
+  if(c) f=f.filter(r=>r.can[c]);
+  f.sort((a,b)=>{
+    const x=val(a,sortKey), y=val(b,sortKey);
+    const s=(x>y)-(x<y);
+    return sortAsc?s:-s;
+  });
+  document.getElementById("body").innerHTML=f.map(r=>`<tr>
+    <td class="num">${r.code}</td><td>${r.name||r.slug}</td><td>${r.pref}</td>
+    <td class="num">${r.year||"-"}</td><td class="num">${(r.nSample||0).toLocaleString()}</td>
+    ${ATTRS.map(([k])=>{const g=r.grade[k]||"-";return `<td class="g ${GC[g]}">${g}</td>`}).join("")}
+    ${CANS.map(([k])=>`<td class="can ${r.can[k]?"yes":"no"}">${r.can[k]?"可":"—"}</td>`).join("")}
+  </tr>`).join("");
+  stats(f);
+}
+function stats(f){
+  const n=f.length;
+  const cnt=k=>f.filter(r=>r.can[k]).length;
+  const yr=f.filter(r=>"◎○△".includes(r.grade.year_of_construction)).length;
+  document.getElementById("stats").innerHTML=`
+    <div class="stat"><b>${n}</b><span>表示中の自治体</span></div>
+    <div class="stat"><b>${cnt("人口推定")}</b><span>人口推定ができる</span></div>
+    <div class="stat"><b>${yr}</b><span>建築年が20%以上入る</span></div>
+    <div class="stat"><b>${cnt("耐震_被害推定")}</b><span>耐震・被害推定ができる</span></div>
+    <div class="stat"><b>${cnt("時系列比較")}</b><span>時系列比較ができる</span></div>`;
+}
+Promise.all([fetch("carte.json").then(r=>r.json()),
+             fetch("names.json").then(r=>r.json()).catch(()=>({}))])
+.then(([d,names])=>{
+  rows=d.cities.map(c=>({...c,name:names[c.code]||"",pref:PREFS[c.code.slice(0,2)]||""}));
+  const ps=[...new Set(rows.map(r=>r.code.slice(0,2)))].sort();
+  document.getElementById("pref").innerHTML+=ps.map(p=>`<option value="${p}">${PREFS[p]||p}</option>`).join("");
+  head(); render();
+  ["q","pref","can"].forEach(id=>document.getElementById(id).oninput=render);
+});
+</script>

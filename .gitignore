@@ -1,0 +1,42 @@
+# --- 応募資料・戦略メモ（公開しない） ---
+award/
+docs/05-award-outlook.md
+INCOMING-*.md
+
+# --- 第三者の元データ・文献（再配布しない。取得手順は README） ---
+refs/
+data/n03/
+data/estat/
+
+# --- キャッシュ・一時ファイル ---
+__pycache__/
+data/cache/
+*.tmp
+*.bak
+node_modules/
+
+# --- 作業途中のバックアップ（carte.json と同一か、途中経過） ---
+data/carte_266ok_backup.json
+data/carte_306_stratified.json
+data/*.pre_rescan.json
+web/*.pre_rescan.svg
+
+# --- 古い地図のプレビュー画像（README は web/map-kanto.svg を使う） ---
+/map-preview.png
+/map-kanto.png
+
+# --- 第三者の元データ（e-Stat 小地域境界）と、検証スクリプトが作る中間ファイル ---
+data/bnd22.zip
+data/kosai_bldg.csv
+data/kosai_weighted.csv
+*.log
+
+# --- 公的リストの建物名・住所を含む突合記録（結論は docs/02-verify-year.md に記載） ---
+data/verify_year.json
+
+# --- 過去年度比較。2026-10-15 に採否を決めてから、採用なら外す ---
+data/vintage_compare.json
+
+# --- 応募デッキ専用の照合ツール（デッキ本体を公開しないので単体では動かない） ---
+scripts/check_deck.py
+scripts/deck_targets.py

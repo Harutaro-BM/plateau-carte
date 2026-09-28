@@ -1,0 +1,2725 @@
+{
+ "source": "G空間情報センター CKAN package_list",
+ "excluded": {
+  "27999": "2025年大阪・関西万博会場（非営利限定ライセンス。自治体ではない）"
+ },
+ "note": "データセット名 plateau-{団体コード}-{slug}-{年度} から抽出",
+ "plateauDatasets": 523,
+ "unmatchedNames": [
+  "plateau-17206-kaga-shi",
+  "plateau-22203-numazu-shi",
+  "plateau-dt23-03",
+  "plateau-dt23-04",
+  "plateau-dt23-05",
+  "plateau-ec24-0448",
+  "plateau-sapporo2020-flatgeobuf",
+  "plateau-tokyo23ku",
+  "plateau-tokyo23ku-2022",
+  "plateau-tokyo23ku-2023-lod4",
+  "plateau-tokyo23ku-3dtiles-2020",
+  "plateau-tokyo23ku-building-mvt-2020",
+  "plateau-tokyo23ku-citygml-2020",
+  "plateau-tokyo23ku-fbx-2020",
+  "plateau-tokyo23ku-fbx4-2020",
+  "plateau-tokyo23ku-geotiff-2020",
+  "plateau-tokyo23ku-obj-2020",
+  "plateau-tokyo23ku-obj4-2020",
+  "plateau-tokyo-takeshiba-2023",
+  "plateau-tokyo-takeshiba-cg3-sample",
+  "plateau-uc23-01",
+  "plateau-uc23-02",
+  "plateau-uc23-04",
+  "plateau-uc23-05",
+  "plateau-uc23-07",
+  "plateau-uc23-08",
+  "plateau-uc23-10",
+  "plateau-uc23-11",
+  "plateau-uc23-13",
+  "plateau-uc23-14",
+  "plateau-uc23-17",
+  "plateau-uc23-21",
+  "plateau-uc23-22",
+  "plateau-uc24-01",
+  "plateau-uc24-06",
+  "plateau-uc24-07",
+  "plateau-uc24-10",
+  "plateau-uc24-13",
+  "plateau-uc24-15",
+  "plateau-uc24-16",
+  "plateau-uc24-17",
+  "plateau-uc25-01",
+  "plateau-uc25-08",
+  "plateau-uc25-09",
+  "plateau-uc25-11",
+  "plateau-uc25-40",
+  "plateau-usecase-portal"
+ ],
+ "municipalities": 306,
+ "prefectures": 45,
+ "byPrefecture": {
+  "01": 3,
+  "02": 2,
+  "03": 2,
+  "04": 1,
+  "05": 1,
+  "07": 6,
+  "08": 3,
+  "09": 1,
+  "10": 3,
+  "11": 49,
+  "12": 6,
+  "13": 62,
+  "14": 8,
+  "15": 6,
+  "16": 3,
+  "17": 2,
+  "19": 1,
+  "20": 9,
+  "21": 3,
+  "22": 35,
+  "23": 9,
+  "24": 3,
+  "25": 2,
+  "26": 3,
+  "27": 14,
+  "28": 5,
+  "29": 2,
+  "30": 3,
+  "31": 4,
+  "32": 3,
+  "33": 5,
+  "34": 7,
+  "35": 1,
+  "36": 2,
+  "37": 2,
+  "38": 3,
+  "39": 4,
+  "40": 9,
+  "41": 6,
+  "42": 3,
+  "43": 5,
+  "44": 2,
+  "45": 1,
+  "46": 1,
+  "47": 1
+ },
+ "cities": [
+  {
+   "code": "01100",
+   "slug": "sapporo-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "01205",
+   "slug": "muroran-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "01639",
+   "slug": "sarabetsu-mura",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "02208",
+   "slug": "mutsu-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "02321",
+   "slug": "ajigasawa-machi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "03201",
+   "slug": "morioka-shi",
+   "years": [
+    2022,
+    2023,
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "03202",
+   "slug": "miyako-shi",
+   "years": [
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "04100",
+   "slug": "sendai-shi",
+   "years": [
+    2022,
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "05204",
+   "slug": "odate-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "07201",
+   "slug": "fukushima-shi",
+   "years": [
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "07203",
+   "slug": "koriyama-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "07204",
+   "slug": "iwaki-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "07205",
+   "slug": "shirakawa-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "07209",
+   "slug": "soma-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "07212",
+   "slug": "minamisouma-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "08220",
+   "slug": "tsukuba-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "08234",
+   "slug": "hokota-shi",
+   "years": [
+    2020,
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "08546",
+   "slug": "sakai-machi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "09201",
+   "slug": "utsunomiya-shi",
+   "years": [
+    2020,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "10201",
+   "slug": "maebashi-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "10203",
+   "slug": "kiryu-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "10207",
+   "slug": "tatebayashi-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "11100",
+   "slug": "saitama-shi",
+   "years": [
+    2020,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11202",
+   "slug": "kumagaya-shi",
+   "years": [
+    2020,
+    2023,
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11203",
+   "slug": "kawaguchi-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "11207",
+   "slug": "chichibu-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11208",
+   "slug": "tokorozawa-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "11210",
+   "slug": "kazo-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "11211",
+   "slug": "honjo-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11214",
+   "slug": "kasukabe-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "11215",
+   "slug": "sayama-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11216",
+   "slug": "hanyu-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11217",
+   "slug": "konosu-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "11218",
+   "slug": "fukaya-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11219",
+   "slug": "ageo-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11221",
+   "slug": "soka-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11222",
+   "slug": "koshigaya-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "11223",
+   "slug": "warabi-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "11224",
+   "slug": "toda-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "11225",
+   "slug": "iruma-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11227",
+   "slug": "asaka-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11228",
+   "slug": "shiki-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "11229",
+   "slug": "wako-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11230",
+   "slug": "niiza-shi",
+   "years": [
+    2020,
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "11231",
+   "slug": "okegawa-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11232",
+   "slug": "kuki-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "11233",
+   "slug": "kitamoto-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11234",
+   "slug": "yashio-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "11235",
+   "slug": "fujimi-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "11237",
+   "slug": "misato-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "11238",
+   "slug": "hasuda-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "11239",
+   "slug": "sakado-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11240",
+   "slug": "satte-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "11241",
+   "slug": "tsurugashima-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "11243",
+   "slug": "yoshikawa-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "11245",
+   "slug": "fujimino-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11246",
+   "slug": "shiraoka-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "11301",
+   "slug": "ina-machi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "11324",
+   "slug": "miyoshi-machi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "11326",
+   "slug": "moroyama-machi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "11341",
+   "slug": "namegawa-machi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11342",
+   "slug": "ranzan-machi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11343",
+   "slug": "ogawa-machi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11346",
+   "slug": "kawajima-machi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11347",
+   "slug": "yoshimi-machi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11348",
+   "slug": "hatoyama-machi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11385",
+   "slug": "kamisato-machi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "11408",
+   "slug": "yorii-machi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "11442",
+   "slug": "miyashiro-machi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "11464",
+   "slug": "sugito-machi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "11465",
+   "slug": "matsubushi-machi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "12100",
+   "slug": "chiba-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "12206",
+   "slug": "kisarazu-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "12210",
+   "slug": "mobara-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "12217",
+   "slug": "kashiwa-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "12221",
+   "slug": "yachiyo-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "12347",
+   "slug": "tako-machi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13101",
+   "slug": "chiyoda-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13102",
+   "slug": "chuo-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13103",
+   "slug": "minato-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13104",
+   "slug": "shinjuku-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13105",
+   "slug": "bunkyo-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13106",
+   "slug": "taito-ku",
+   "years": [
+    2023,
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13107",
+   "slug": "sumida-ku",
+   "years": [
+    2023,
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13108",
+   "slug": "koto-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13109",
+   "slug": "shinagawa-ku",
+   "years": [
+    2023,
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13110",
+   "slug": "meguro-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13111",
+   "slug": "ota-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13112",
+   "slug": "setagaya-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13113",
+   "slug": "shibuya-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13114",
+   "slug": "nakano-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13115",
+   "slug": "suginami-ku",
+   "years": [
+    2023,
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13116",
+   "slug": "toshima-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13117",
+   "slug": "kita-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13118",
+   "slug": "arakawa-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13119",
+   "slug": "itabashi-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13120",
+   "slug": "nerima-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13121",
+   "slug": "adachi-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13122",
+   "slug": "katsushika-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13123",
+   "slug": "edogawa-ku",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13201",
+   "slug": "hachioji-shi",
+   "years": [
+    2020,
+    2022,
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13202",
+   "slug": "tachikawa-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13203",
+   "slug": "musashino-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13204",
+   "slug": "mitaka-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13205",
+   "slug": "ome-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13206",
+   "slug": "fuchu-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13207",
+   "slug": "akishima-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13208",
+   "slug": "chofu-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13209",
+   "slug": "machida-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13210",
+   "slug": "koganei-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13211",
+   "slug": "kodaira-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13212",
+   "slug": "hino-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13213",
+   "slug": "higashimurayama-shi",
+   "years": [
+    2020,
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13214",
+   "slug": "kokubunji-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13215",
+   "slug": "kunitachi-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13218",
+   "slug": "fussa-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13219",
+   "slug": "komae-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13220",
+   "slug": "higashiyamato-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13221",
+   "slug": "kiyose-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13222",
+   "slug": "higashikurume-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13223",
+   "slug": "musashimurayama-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13224",
+   "slug": "tama-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13225",
+   "slug": "inagi-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13227",
+   "slug": "hamura-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13228",
+   "slug": "akiruno-shi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13229",
+   "slug": "nishitokyo-shi",
+   "years": [
+    2022,
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13303",
+   "slug": "mizuho-machi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13305",
+   "slug": "hinode-machi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13307",
+   "slug": "hinohara-mura",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13308",
+   "slug": "okutama-machi",
+   "years": [
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "13361",
+   "slug": "oshima-machi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "13362",
+   "slug": "toshima-mura",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "13363",
+   "slug": "niijima-mura",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "13364",
+   "slug": "kozushima-mura",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "13381",
+   "slug": "miyake-mura",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "13382",
+   "slug": "mikurajima-mura",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "13401",
+   "slug": "hachijo-machi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "13402",
+   "slug": "aogashima-mura",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "13421",
+   "slug": "ogasawara-mura",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "14100",
+   "slug": "yokohama-shi",
+   "years": [
+    2020,
+    2022,
+    2023,
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "14130",
+   "slug": "kawasaki-shi",
+   "years": [
+    2020,
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "14150",
+   "slug": "sagamihara-shi",
+   "years": [
+    2020,
+    2023,
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "14201",
+   "slug": "yokosuka-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "14204",
+   "slug": "kamakura-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "14205",
+   "slug": "fujisawa-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "14212",
+   "slug": "atsugi-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "14382",
+   "slug": "hakone-machi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "15100",
+   "slug": "niigata-shi",
+   "years": [
+    2020,
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "15202",
+   "slug": "nagaoka-shi",
+   "years": [
+    2023,
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "15204",
+   "slug": "sanjo-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "15206",
+   "slug": "shibata-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "15209",
+   "slug": "kamo-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "15222",
+   "slug": "joetsu-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "16202",
+   "slug": "takaoka-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "16211",
+   "slug": "imizu-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "16321",
+   "slug": "funahashi-mura",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "17201",
+   "slug": "kanazawa-shi",
+   "years": [
+    2020,
+    2023,
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "17206",
+   "slug": "kaga-shi",
+   "years": [
+    2020,
+    2021,
+    2022,
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "19201",
+   "slug": "kofu-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "20201",
+   "slug": "nagano-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "20202",
+   "slug": "matsumoto-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "20204",
+   "slug": "okaya-shi",
+   "years": [
+    2020,
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "20206",
+   "slug": "suwa-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "20209",
+   "slug": "ina-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "20213",
+   "slug": "iiyama-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "20214",
+   "slug": "chino-shi",
+   "years": [
+    2020,
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "20217",
+   "slug": "saku-shi",
+   "years": [
+    2022,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "20220",
+   "slug": "azumino-shi",
+   "years": [
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "21201",
+   "slug": "gifu-shi",
+   "years": [
+    2020,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "21202",
+   "slug": "ogaki-shi",
+   "years": [
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "21211",
+   "slug": "minokamo-shi",
+   "years": [
+    2022,
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "22100",
+   "slug": "shizuoka-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22130",
+   "slug": "hamamatsu-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22203",
+   "slug": "numazu-shi",
+   "years": [
+    2020,
+    2021,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22205",
+   "slug": "atami-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22206",
+   "slug": "mishima-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22207",
+   "slug": "fujinomiya-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22208",
+   "slug": "ito-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22209",
+   "slug": "shimada-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22210",
+   "slug": "fuji-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22211",
+   "slug": "iwata-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22212",
+   "slug": "yaizu-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22213",
+   "slug": "kakegawa-shi",
+   "years": [
+    2020,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22214",
+   "slug": "fujieda-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22215",
+   "slug": "gotenba-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22216",
+   "slug": "fukuroi-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22219",
+   "slug": "shimoda-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22220",
+   "slug": "susono-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22221",
+   "slug": "kosai-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22222",
+   "slug": "izu-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22223",
+   "slug": "omaezaki-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22224",
+   "slug": "kikugawa-shi",
+   "years": [
+    2020,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22225",
+   "slug": "izunokuni-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22226",
+   "slug": "makinohara-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22301",
+   "slug": "higashiizu-cho",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22302",
+   "slug": "kawazu-cho",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22304",
+   "slug": "minamiizu-cho",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22305",
+   "slug": "matsuzaki-cho",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22306",
+   "slug": "nishiizu-cho",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22325",
+   "slug": "kannami-cho",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22341",
+   "slug": "shimizu-cho",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22342",
+   "slug": "nagaizumi-cho",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22344",
+   "slug": "oyama-cho",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22424",
+   "slug": "yoshida-cho",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22429",
+   "slug": "kawanehon-cho",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "22461",
+   "slug": "mori-machi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "23100",
+   "slug": "nagoya-shi",
+   "years": [
+    2020,
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "23201",
+   "slug": "toyohashi-shi",
+   "years": [
+    2023,
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "23202",
+   "slug": "okazaki-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "23206",
+   "slug": "kasugai-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "23207",
+   "slug": "toyokawa-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "23208",
+   "slug": "tsushima-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "23211",
+   "slug": "toyota-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "23212",
+   "slug": "anjo-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "23230",
+   "slug": "nisshin-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "24202",
+   "slug": "yokkaichi-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "24203",
+   "slug": "ise-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "24212",
+   "slug": "kumano-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "25203",
+   "slug": "nagahama-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "25204",
+   "slug": "omihachiman-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "26100",
+   "slug": "kyoto-shi",
+   "years": [
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "26202",
+   "slug": "maizuru-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "26465",
+   "slug": "yosano-cho",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "27100",
+   "slug": "osaka-shi",
+   "years": [
+    2020,
+    2022,
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "27140",
+   "slug": "sakai-shi",
+   "years": [
+    2022,
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "27202",
+   "slug": "kishiwadashi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "27203",
+   "slug": "toyonaka-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "27204",
+   "slug": "ikeda-shi",
+   "years": [
+    2020,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "27207",
+   "slug": "takatsuki-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "27209",
+   "slug": "moriguchi-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "27216",
+   "slug": "kawachinagano-shi",
+   "years": [
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "27219",
+   "slug": "izumi-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "27221",
+   "slug": "kashiwara-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "27223",
+   "slug": "kadoma-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "27224",
+   "slug": "settsu-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "27227",
+   "slug": "higashiosaka-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "27341",
+   "slug": "tadaoka-cho",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "28201",
+   "slug": "himeji-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "28210",
+   "slug": "kakogawa-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "28215",
+   "slug": "miki-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "28225",
+   "slug": "asago-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "28229",
+   "slug": "tatsuno-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "29210",
+   "slug": "kashiba-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "29343",
+   "slug": "sango-cho",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "30201",
+   "slug": "wakayama-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "30406",
+   "slug": "susami-cho",
+   "years": [
+    2023,
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "30422",
+   "slug": "taiji-cho",
+   "years": [
+    2021
+   ],
+   "latestYear": 2021
+  },
+  {
+   "code": "31201",
+   "slug": "tottori-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "31202",
+   "slug": "yonago-shi",
+   "years": [
+    2023,
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "31204",
+   "slug": "sakaiminato-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "31384",
+   "slug": "hiezu-son",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "32201",
+   "slug": "matsue-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "32204",
+   "slug": "masuda-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "32528",
+   "slug": "okinoshima-cho",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "33100",
+   "slug": "okayama-shi",
+   "years": [
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "33202",
+   "slug": "kurashiki-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "33203",
+   "slug": "tsuyama-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "33211",
+   "slug": "bizen-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "33423",
+   "slug": "hayashima-cho",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "34100",
+   "slug": "hiroshima-shi",
+   "years": [
+    2022,
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "34202",
+   "slug": "kure-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "34203",
+   "slug": "takehara-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "34207",
+   "slug": "fukuyama-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "34208",
+   "slug": "fuchu-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "34209",
+   "slug": "miyoshi-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "34304",
+   "slug": "kaita-cho",
+   "years": [
+    2021,
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "35215",
+   "slug": "shunan-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "36201",
+   "slug": "tokushima-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "36387",
+   "slug": "minami-cho",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "37201",
+   "slug": "takamatsu-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "37206",
+   "slug": "sanuki-shi",
+   "years": [
+    2023,
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "38201",
+   "slug": "matsuyama-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "38203",
+   "slug": "uwajima-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "38215",
+   "slug": "toon-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "39201",
+   "slug": "kouchi-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "39203",
+   "slug": "aki-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "39211",
+   "slug": "konan-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "39386",
+   "slug": "ino-cho",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "40100",
+   "slug": "kitakyushu-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "40130",
+   "slug": "fukuoka-shi",
+   "years": [
+    2022,
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "40202",
+   "slug": "omuta-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "40203",
+   "slug": "kurume-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "40205",
+   "slug": "iizuka-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "40220",
+   "slug": "munakata-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "40223",
+   "slug": "koga-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "40225",
+   "slug": "ukiha-shi",
+   "years": [
+    2022,
+    2023,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "40447",
+   "slug": "chikuzen-machi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "41203",
+   "slug": "tosu-shi",
+   "years": [
+    2024,
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "41206",
+   "slug": "takeo-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "41208",
+   "slug": "ogi-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "41423",
+   "slug": "omachi-cho",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "41424",
+   "slug": "kouhoku-machi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "41425",
+   "slug": "shiroisi-chou",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "42202",
+   "slug": "sasebo-shi",
+   "years": [
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "42208",
+   "slug": "matsuura-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "42323",
+   "slug": "hasami-cho",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "43100",
+   "slug": "kumamoto-shi",
+   "years": [
+    2020,
+    2022
+   ],
+   "latestYear": 2022
+  },
+  {
+   "code": "43204",
+   "slug": "arao-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "43206",
+   "slug": "tamana-shi",
+   "years": [
+    2020,
+    2023,
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "43213",
+   "slug": "uki-shi",
+   "years": [
+    2025
+   ],
+   "latestYear": 2025
+  },
+  {
+   "code": "43443",
+   "slug": "mashiki-machi",
+   "years": [
+    2020,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "44204",
+   "slug": "hita-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  },
+  {
+   "code": "44206",
+   "slug": "usuki-shi",
+   "years": [
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "45203",
+   "slug": "nobeoka-shi",
+   "years": [
+    2022,
+    2023
+   ],
+   "latestYear": 2023
+  },
+  {
+   "code": "46220",
+   "slug": "minamisatsuma-shi",
+   "years": [
+    2024
+   ],
+   "latestYear": 2024
+  },
+  {
+   "code": "47201",
+   "slug": "naha-shi",
+   "years": [
+    2020
+   ],
+   "latestYear": 2020
+  }
+ ]
+}

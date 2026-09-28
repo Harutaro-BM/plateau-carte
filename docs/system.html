@@ -1,0 +1,898 @@
+<title>PLATEAUカルテの構造</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+  :root {
+    /* 測量図の製図インクを軸にした配色。地は青みを寄せた紙色 */
+    --ground:        #f4f6f7;
+    --surface:       #ffffff;
+    --surface-sunk:  #eceff1;
+    --ink:           #161f24;
+    --ink-soft:      #3d4c55;
+    --muted:         #66757e;
+    --line:          #d9dfe3;
+    --line-strong:   #b3bec5;
+    --accent:        #1f5f7a;
+    --accent-soft:   #e4eef2;
+    --accent-ink:    #16485e;
+
+    /* 段階評価の色。システム自身が持つ意味色で、アクセントとは役割が別 */
+    --g4: #1f7a4d;
+    --g3: #4f8f3e;
+    --g2: #b0801d;
+    --g1: #c0651e;
+    --g0: #b93f3f;
+
+    --measure: 68ch;
+    --rail: 232px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:        #101619;
+      --surface:       #172025;
+      --surface-sunk:  #1e2a30;
+      --ink:           #e4eaed;
+      --ink-soft:      #b6c3ca;
+      --muted:         #8496a0;
+      --line:          #2a373e;
+      --line-strong:   #3d4d56;
+      --accent:        #6fb3cc;
+      --accent-soft:   #1a2c35;
+      --accent-ink:    #9bcfe2;
+
+      --g4: #55b585;
+      --g3: #8fc46f;
+      --g2: #ddb254;
+      --g1: #e08a52;
+      --g0: #e07272;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:        #101619;
+    --surface:       #172025;
+    --surface-sunk:  #1e2a30;
+    --ink:           #e4eaed;
+    --ink-soft:      #b6c3ca;
+    --muted:         #8496a0;
+    --line:          #2a373e;
+    --line-strong:   #3d4d56;
+    --accent:        #6fb3cc;
+    --accent-soft:   #1a2c35;
+    --accent-ink:    #9bcfe2;
+
+    --g4: #55b585;
+    --g3: #8fc46f;
+    --g2: #ddb254;
+    --g1: #e08a52;
+    --g0: #e07272;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Yu Gothic", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  code, .num, .mono {
+    font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- 骨格 ---------- */
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 28px 96px;
+    display: grid;
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+    gap: 0 56px;
+    align-items: start;
+  }
+
+  .masthead {
+    grid-column: 1 / -1;
+    padding: 64px 0 40px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .kicker {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+    font-weight: 700;
+  }
+
+  h1 {
+    font-family: "Zen Old Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+    font-weight: 700;
+    font-size: clamp(34px, 5vw, 52px);
+    line-height: 1.28;
+    letter-spacing: 0.01em;
+    margin: 0 0 18px;
+    text-wrap: balance;
+  }
+
+  .standfirst {
+    max-width: var(--measure);
+    font-size: 18px;
+    color: var(--ink-soft);
+    margin: 0 0 34px;
+  }
+
+  .figures {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .figures div {
+    flex: 1 1 130px;
+    padding: 14px 18px;
+    border-right: 1px solid var(--line);
+  }
+  .figures div:last-child { border-right: 0; }
+  .figures b {
+    display: block;
+    font-family: "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--accent-ink);
+  }
+  .figures span {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  /* ---------- 目次 ---------- */
+
+  nav {
+    position: sticky;
+    top: 28px;
+    padding-top: 44px;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  nav p {
+    margin: 0 0 12px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 700;
+  }
+  nav ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+  nav li { counter-increment: toc; margin-bottom: 2px; }
+  nav a {
+    display: block;
+    padding: 4px 8px 4px 30px;
+    position: relative;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-radius: 2px;
+  }
+  nav a::before {
+    content: counter(toc, decimal-leading-zero);
+    position: absolute;
+    left: 6px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    color: var(--line-strong);
+  }
+  nav a:hover, nav a:focus-visible {
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+  }
+  nav a:hover::before, nav a:focus-visible::before { color: var(--accent); }
+
+  main { padding-top: 44px; min-width: 0; }
+
+  section { margin-bottom: 68px; scroll-margin-top: 24px; }
+
+  h2 {
+    font-family: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 0 0 6px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--ink);
+    text-wrap: balance;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 34px 0 10px;
+    color: var(--accent-ink);
+  }
+  p { max-width: var(--measure); margin: 0 0 16px; }
+  .lede { font-size: 17px; color: var(--ink-soft); margin-top: 20px; }
+
+  strong { font-weight: 700; }
+  em { font-style: normal; font-weight: 700; color: var(--g0); }
+
+  code {
+    font-size: 0.88em;
+    background: var(--surface-sunk);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+
+  /* ---------- 表 ---------- */
+
+  .scroll { overflow-x: auto; margin: 20px 0 8px; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 480px;
+    font-size: 14.5px;
+    background: var(--surface);
+  }
+  caption {
+    caption-side: bottom;
+    text-align: left;
+    font-size: 12.5px;
+    color: var(--muted);
+    padding-top: 10px;
+    line-height: 1.7;
+  }
+  th, td {
+    text-align: left;
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  thead th {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    font-weight: 700;
+    border-bottom: 1px solid var(--line-strong);
+    white-space: nowrap;
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.n, th.n { text-align: right; font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.f { font-family: "IBM Plex Mono", monospace; font-size: 13px; white-space: nowrap; }
+
+  .g4 { color: var(--g4); font-weight: 700; }
+  .g3 { color: var(--g3); font-weight: 700; }
+  .g2 { color: var(--g2); font-weight: 700; }
+  .g1 { color: var(--g1); font-weight: 700; }
+  .g0 { color: var(--g0); font-weight: 700; }
+
+  /* ---------- 図 ---------- */
+
+  figure { margin: 26px 0; }
+  .diagram {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 22px 18px;
+    overflow-x: auto;
+  }
+  .diagram svg { display: block; width: 100%; min-width: 620px; height: auto; }
+  figcaption { font-size: 12.5px; color: var(--muted); margin-top: 10px; line-height: 1.7; }
+
+  .d-box { fill: var(--surface); stroke: var(--line-strong); stroke-width: 1; }
+  .d-box.acc { fill: var(--accent-soft); stroke: var(--accent); }
+  .d-box.out { fill: var(--surface-sunk); stroke: var(--line-strong); stroke-dasharray: 3 2.5; }
+  .d-title { fill: var(--ink); font-size: 13px; font-weight: 700; }
+  .d-sub { fill: var(--muted); font-size: 11px; }
+  .d-file { fill: var(--accent-ink); font-size: 11px; font-family: "IBM Plex Mono", monospace; }
+  .d-flow { stroke: var(--line-strong); stroke-width: 1.4; fill: none; }
+  .d-step { fill: var(--line-strong); font-size: 11px; font-family: "IBM Plex Mono", monospace; }
+
+  /* ---------- 注記ブロック ---------- */
+
+  .note {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 2px;
+    padding: 16px 20px;
+    margin: 22px 0;
+    font-size: 14.5px;
+    max-width: var(--measure);
+  }
+  .note p { margin: 0; max-width: none; }
+  .note p + p { margin-top: 10px; }
+  .note.warn { border-left-color: var(--g0); }
+
+  pre {
+    background: var(--surface-sunk);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 15px 18px;
+    overflow-x: auto;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    line-height: 1.75;
+    margin: 18px 0;
+  }
+  pre code { background: none; padding: 0; font-size: inherit; }
+  pre .c { color: var(--muted); }
+
+  ul { max-width: var(--measure); padding-left: 1.25em; margin: 0 0 16px; }
+  li { margin-bottom: 7px; }
+
+  footer {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  footer p { max-width: none; }
+
+  a { color: var(--accent-ink); }
+
+  @media (max-width: 900px) {
+    .wrap { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    nav { position: static; padding-top: 32px; }
+    nav ol { columns: 2; column-gap: 24px; }
+    main { padding-top: 20px; }
+    .masthead { padding-top: 44px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; }
+  }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="kicker">PLATEAU AWARD 2026 応募作品 ／ システム構成</p>
+    <h1>PLATEAUカルテの構造</h1>
+    <p class="standfirst">
+      全国306自治体のPLATEAU建物データを実際に開き、8つの属性が<strong>実測で何パーセント入っているか</strong>を測って、
+      検索できる静的Webにするシステム。公式が公表しているのは「仕様上あるか」の○×で、実測の充填率ではない。その差を埋める。
+    </p>
+    <div class="figures">
+      <div><b>306</b><span>走査した自治体</span></div>
+      <div><b>2,409,305</b><span>標本にした建物</span></div>
+      <div><b>8</b><span>測る属性</span></div>
+      <div><b>75分</b><span>全国走査の所要</span></div>
+      <div><b>4.7GB</b><span>転送量</span></div>
+      <div><b>0</b><span>実行時の依存ライブラリ</span></div>
+    </div>
+  </header>
+
+  <nav aria-label="目次">
+    <p>目次</p>
+    <ol>
+      <li><a href="#what">何をするものか</a></li>
+      <li><a href="#flow">データの流れ</a></li>
+      <li><a href="#parts">部品の一覧</a></li>
+      <li><a href="#attrs">測る8属性とダミー値</a></li>
+      <li><a href="#grade">段階評価と可否判定</a></li>
+      <li><a href="#result">出た結果</a></li>
+      <li><a href="#map">地図の作り方</a></li>
+      <li><a href="#run">走らせ方</a></li>
+      <li><a href="#verify">検証の仕組み</a></li>
+      <li><a href="#traps">踏んだ罠</a></li>
+      <li><a href="#limits">限界</a></li>
+      <li><a href="#license">出典とライセンス</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <section id="what">
+      <h2>何をするものか</h2>
+      <p class="lede">
+        PLATEAUを使って何かを分析しようとすると、最初に「自分の街のデータに必要な属性が入っているか」を調べることになる。
+        公式には<strong>属性情報公開リスト</strong>があるが、これは仕様上その属性が定義されているかの○×で、
+        実際に値が入っている割合ではない。
+      </p>
+      <p>
+        実測すると、両方向に食い違う。建築年が○のいわき市は<strong>51.3%</strong>、白河市は<strong>37.8%</strong>。
+        逆に空欄の宗像市は<strong>86.2%</strong>、北九州市は<strong>85.0%</strong>（いずれも2020年度データ同士の比較）。
+        <em>○だから使えるとも、空欄だから使えないとも言えない。</em>
+      </p>
+      <div class="note">
+        <p>
+          さらに、その公式一覧は<strong>56都市ぶんで、最終更新は2021年8月6日</strong>（PDF内に印字）。
+          PLATEAUは現在306自治体なので、<strong>残る250自治体には参照できる一覧そのものが無い</strong>。
+        </p>
+      </div>
+      <p>
+        カルテは306自治体すべてのCityGMLを実際に開いて数え、
+        「この街でこの分析を<strong>始められるか</strong>」を段階評価で返す。
+        「うまくいくか」は保証しない ── 属性が揃っていることは必要条件であって十分条件ではないため、
+        そこは主張範囲から外している。
+      </p>
+    </section>
+
+    <section id="flow">
+      <h2>データの流れ</h2>
+      <p>
+        入口は2つ。自治体名とCityGMLの所在を引くCKAN API、そして地図の境界に使う国土数値情報。
+        本体は縦一本のパイプラインで、<code>carte.json</code> が唯一の中間成果物になる。
+      </p>
+
+      <figure>
+        <div class="diagram">
+          <svg viewBox="0 0 880 700" role="img" aria-label="カルテのデータフロー図。CKAN APIから自治体名とCityGMLのURLを取り、HTTPレンジ要求で建物GMLだけを抜き、解析して充填率を算出し、carte.jsonを経てビューア・地図・スライドに分岐する">
+
+            <!-- 1 CKAN -->
+            <text class="d-step" x="0" y="24">01</text>
+            <rect class="d-box" x="30" y="8" width="250" height="52" rx="3"/>
+            <text class="d-title" x="44" y="30">G空間情報センター</text>
+            <text class="d-sub" x="44" y="48">CKAN API・データセット名と配布URL</text>
+
+            <path class="d-flow" d="M155 60 L155 92" marker-end="url(#a)"/>
+            <path class="d-flow" d="M280 34 L420 34 L420 92" marker-end="url(#a)"/>
+            <text class="d-file" x="290" y="26">names.py</text>
+            <rect class="d-box out" x="330" y="92" width="180" height="40" rx="3"/>
+            <text class="d-title" x="344" y="117">names.json（306件の名称）</text>
+
+            <!-- 2 zip -->
+            <text class="d-step" x="0" y="112">02</text>
+            <rect class="d-box" x="30" y="92" width="250" height="56" rx="3"/>
+            <text class="d-title" x="44" y="114">PLATEAU CityGML zip</text>
+            <text class="d-sub" x="44" y="132">1自治体あたり200MB〜1GB</text>
+
+            <path class="d-flow" d="M155 148 L155 186" marker-end="url(#a)"/>
+
+            <!-- 3 remote_zip -->
+            <text class="d-step" x="0" y="208">03</text>
+            <rect class="d-box acc" x="30" y="186" width="380" height="58" rx="3"/>
+            <text class="d-file" x="44" y="207">remote_zip.py</text>
+            <text class="d-title" x="44" y="228">HTTPレンジ要求で建物GMLだけ抜く</text>
+            <text class="d-sub" x="290" y="228">全体は落とさない</text>
+
+            <path class="d-flow" d="M155 244 L155 282" marker-end="url(#a)"/>
+
+            <!-- 4 parse -->
+            <text class="d-step" x="0" y="304">04</text>
+            <rect class="d-box acc" x="30" y="282" width="380" height="58" rx="3"/>
+            <text class="d-file" x="44" y="303">parse_bldg.py</text>
+            <text class="d-title" x="44" y="324">CityGML v2〜v5を名前空間非依存で解析</text>
+
+            <path class="d-flow" d="M155 340 L155 378" marker-end="url(#a)"/>
+
+            <!-- 5 scan -->
+            <text class="d-step" x="0" y="400">05</text>
+            <rect class="d-box acc" x="30" y="378" width="380" height="76" rx="3"/>
+            <text class="d-file" x="44" y="399">scan.py</text>
+            <text class="d-title" x="44" y="420">建物数の多い3メッシュを標本抽出</text>
+            <text class="d-sub" x="44" y="440">ダミー値を除いて充填率 → 段階評価 → 4分析の可否</text>
+
+            <path class="d-flow" d="M155 454 L155 492" marker-end="url(#a)"/>
+
+            <!-- 6 carte.json -->
+            <text class="d-step" x="0" y="514">06</text>
+            <rect class="d-box" x="30" y="492" width="380" height="52" rx="3"/>
+            <text class="d-title" x="44" y="514">carte.json</text>
+            <text class="d-sub" x="44" y="532">306自治体・259KB。唯一の中間成果物</text>
+
+            <!-- 分岐 -->
+            <path class="d-flow" d="M100 544 L100 590 L150 590" marker-end="url(#a)"/>
+            <path class="d-flow" d="M220 544 L220 640 L150 640" marker-end="url(#a)"/>
+            <path class="d-flow" d="M340 544 L340 668 L400 668" marker-end="url(#a)"/>
+
+            <rect class="d-box out" x="150" y="568" width="230" height="44" rx="3"/>
+            <text class="d-title" x="164" y="595">ビューア（静的HTML・14KB）</text>
+
+            <rect class="d-box out" x="150" y="618" width="230" height="44" rx="3"/>
+            <text class="d-title" x="164" y="645">map.svg ／ map-kanto.svg</text>
+
+            <rect class="d-box out" x="400" y="646" width="230" height="44" rx="3"/>
+            <text class="d-title" x="414" y="673">スライド19枚 → PDF</text>
+
+            <!-- 国土数値情報の側入力 -->
+            <rect class="d-box" x="520" y="378" width="330" height="56" rx="3"/>
+            <text class="d-title" x="534" y="400">国土数値情報 行政区域データ</text>
+            <text class="d-sub" x="534" y="418">N03・2025年1月1日版・47都道府県</text>
+
+            <path class="d-flow" d="M685 434 L685 470" marker-end="url(#a)"/>
+            <rect class="d-box acc" x="520" y="470" width="330" height="58" rx="3"/>
+            <text class="d-file" x="534" y="491">build_map.py → render_map.py</text>
+            <text class="d-title" x="534" y="512">県単位に融合・単純化してSVG化</text>
+
+            <path class="d-flow" d="M520 499 L470 499 L470 630 L382 630" marker-end="url(#a)"/>
+
+            <defs>
+              <marker id="a" viewBox="0 0 8 8" refX="6.5" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M0 1 L7 4 L0 7 z" fill="var(--line-strong)"/>
+              </marker>
+            </defs>
+          </svg>
+        </div>
+        <figcaption>
+          青い枠が処理、破線が出力。<code>carte.json</code> から先はすべて同じデータを見ているので、
+          ビューア・地図・スライドの数字がずれない。
+        </figcaption>
+      </figure>
+
+      <h3>なぜHTTPレンジ要求なのか</h3>
+      <p>
+        PLATEAUのCityGML zipは1自治体で200MB〜1GBあり、大半はDEMと浸水想定区域。必要なのは <code>udx/bldg/*.gml</code> だけ。
+        zipの中央ディレクトリは末尾にあるので、<code>seek</code>／<code>read</code>／<code>tell</code> をRangeリクエストで実装した
+        ファイルライクを <code>zipfile.ZipFile</code> に渡せば、標準ライブラリだけで必要なメンバだけ取れる。
+        <strong>9.2MBのzipの一覧取得が転送0.84MBで済む。</strong>
+      </p>
+    </section>
+
+    <section id="parts">
+      <h2>部品の一覧</h2>
+      <p>
+        本体は8本のPythonスクリプトと、他プロジェクトと共有している3本の資産。
+        ビューアは依存ライブラリなしの単一HTML。
+      </p>
+
+      <div class="scroll">
+        <table>
+          <caption>行数は2026-08-30時点。共通資産は <code>plateau-timeseries/scripts/</code> にあり、年度間変化検出の検証で作ったものを流用している。</caption>
+          <thead>
+            <tr><th>ファイル</th><th class="n">行</th><th>役割</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="f">scan.py</td><td class="n">226</td><td>全国走査の本体。メッシュ選択・充填率・段階評価・可否判定</td></tr>
+            <tr><td class="f">names.py</td><td class="n">37</td><td>CKANのデータセット名から自治体コードと日本語名の対応を作る</td></tr>
+            <tr><td class="f">build_map.py</td><td class="n">227</td><td>境界データの取得・県単位の融合・単純化・微小島の除去</td></tr>
+            <tr><td class="f">render_map.py</td><td class="n">153</td><td>形状からSVGを描く。全国図と関東の切り出しの2種</td></tr>
+            <tr><td class="f">check_deck.py</td><td class="n">86</td><td>スライドの数値を <code>carte.json</code> から再計算して照合</td></tr>
+            <tr><td class="f">reproduce.py</td><td class="n">229</td><td>湖西市で「属性が下流の推定を改善するか」を検証（結果は不成立）</td></tr>
+            <tr><td class="f">retest.py</td><td class="n">255</td><td>同上の追試。震度メッシュを投入して測り直した（再現せず）</td></tr>
+            <tr><td class="f">verify_year.py</td><td class="n">154</td><td>建築年の値の正しさを行政の公表リストで検証（突合不能で除外）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="scroll">
+        <table>
+          <caption>共通資産。カルテ専用ではなく、PLATEAUを扱う他の検討でも使い回している。</caption>
+          <thead>
+            <tr><th>ファイル</th><th class="n">行</th><th>役割</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="f">remote_zip.py</td><td class="n">86</td><td>リモートzipから必要メンバだけをRangeリクエストで取り出す</td></tr>
+            <tr><td class="f">parse_bldg.py</td><td class="n">163</td><td>CityGML v2〜v5を名前空間非依存で解析。属性・底面積・重心・高さ</td></tr>
+            <tr><td class="f">match_geom.py</td><td class="n">53</td><td>重心近接と面積比による相互最近傍マッチング</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="attrs">
+      <h2>測る8属性とダミー値</h2>
+      <p>
+        建物モデルから8つの属性を取り出す。厄介なのは、<em>欠損がNULLではなく「値」として入っている</em>こと。
+        気づかずに平均を取ると壊れるので、充填率から除いている。
+      </p>
+
+      <div class="scroll">
+        <table>
+          <caption>ダミー値の判定は <code>scan.py</code> の <code>DUMMY</code> 辞書と <code>measure()</code> にある。高さは数値判定で負値を除き、建築年は1800〜2100の範囲に入るものだけ数える。</caption>
+          <thead>
+            <tr><th>表示名</th><th>CityGMLの要素</th><th>除くダミー値</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>高さ</td><td class="f">bldg:measuredHeight</td><td class="f">-9999</td></tr>
+            <tr><td>用途</td><td class="f">bldg:usage</td><td class="f">461（不明）</td></tr>
+            <tr><td>階数</td><td class="f">bldg:storeysAboveGround</td><td class="f">9999</td></tr>
+            <tr><td>建築年</td><td class="f">bldg:yearOfConstruction</td><td>範囲外の年</td></tr>
+            <tr><td>構造種別</td><td class="f">uro:buildingStructureType</td><td class="f">611（不明）</td></tr>
+            <tr><td>耐火構造</td><td class="f">uro:fireproofStructureType</td><td>—</td></tr>
+            <tr><td>測量年</td><td class="f">uro:surveyYear</td><td class="f">0001</td></tr>
+            <tr><td>高さ種別</td><td class="f">uro:lod1HeightType</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note warn">
+        <p>
+          <strong>「年度」は整備年度であって測量年ではない。</strong>
+          時系列で使うなら <code>uro:surveyYear</code> を見る必要がある。
+          同一年度に複数版が併存する自治体もある（海田町2021はv2とv3、更別村2023はv3とv4）。
+        </p>
+      </div>
+    </section>
+
+    <section id="grade">
+      <h2>段階評価と可否判定</h2>
+
+      <h3>なぜ小数を出さないのか</h3>
+      <p>
+        全メッシュを読むと306自治体で数十GBになるので、標本抽出が要る。
+        では標本のばらつきはどれくらいか ── 全市を読んだ5都市で市域を10帯に分けて充填率を測ったところ、
+        幅は<strong>1.6〜17.6ポイント</strong>だった。
+      </p>
+      <p>
+        「94% 対 19.8%」の桁の差を判定するには十分だが、「94.1% 対 91.3%」の順位付けには足りない。
+        だから<strong>出力は段階評価にしている</strong>。自分の測定の誤差を測ったうえで、
+        その誤差に埋もれない粒度を選んだということ。
+      </p>
+
+      <div class="scroll">
+        <table>
+          <caption>段階の境界は <code>scan.py</code> の <code>grade()</code>。</caption>
+          <thead><tr><th>記号</th><th>充填率</th><th>意味</th></tr></thead>
+          <tbody>
+            <tr><td class="g4">◎</td><td class="n">90%以上</td><td>ほぼ全棟に入っている</td></tr>
+            <tr><td class="g3">○</td><td class="n">60〜90%</td><td>実用に足りることが多い</td></tr>
+            <tr><td class="g2">△</td><td class="n">20〜60%</td><td>用途を選べば使える</td></tr>
+            <tr><td class="g1">▲</td><td class="n">0〜20%</td><td>ほぼ使えない</td></tr>
+            <tr><td class="g0">×</td><td class="n">0%</td><td>1棟も入っていない</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4つの分析の可否</h3>
+      <p>充填率から「で、何ができるのか」を導く。ここがカルテの値打ちで、判定条件は <code>derive()</code> にある。</p>
+
+      <div class="scroll">
+        <table>
+          <caption>いずれも必要条件。満たしても結果の精度は保証しない。人口推定を実際に走らせた5都市の中央値誤差は6.4%〜41.0%に開いた。</caption>
+          <thead><tr><th>分析</th><th>条件</th><th>理由</th><th class="n">該当</th></tr></thead>
+          <tbody>
+            <tr><td>時系列比較</td><td>測量年 60%以上</td><td>年度＝整備年度なので測量年が要る</td><td class="n">276</td></tr>
+            <tr><td>高さ解析</td><td>高さ 90%以上 かつ 高さ種別 60%以上</td><td>軒高か最高高さか分からないと使えない</td><td class="n">228</td></tr>
+            <tr><td>人口推定</td><td>用途 60%以上 かつ 階数 60%以上</td><td>用途で住宅を特定し、階数で床面積を作る</td><td class="n">188</td></tr>
+            <tr><td>耐震・被害推定</td><td>建築年 40%以上 かつ 構造種別 60%以上</td><td>新耐震の前後と、木造か非木造か</td><td class="n">98</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>4つすべてが「可」なのは<strong>61自治体</strong>、どれも始められないのが<strong>14自治体</strong>。</p>
+    </section>
+
+    <section id="result">
+      <h2>出た結果</h2>
+
+      <div class="scroll">
+        <table>
+          <caption>◎と○を合わせた自治体の割合。棟数の重み付けではなく、自治体を数えた割合であることに注意。</caption>
+          <thead><tr><th>属性</th><th class="n">◎＋○の割合</th><th class="n">自治体数</th></tr></thead>
+          <tbody>
+            <tr><td>高さ種別</td><td class="n">100.0%</td><td class="n">306 / 306</td></tr>
+            <tr><td>高さ</td><td class="n">99.7%</td><td class="n">305 / 306</td></tr>
+            <tr><td>測量年</td><td class="n">90.2%</td><td class="n">276 / 306</td></tr>
+            <tr><td>用途</td><td class="n">77.1%</td><td class="n">236 / 306</td></tr>
+            <tr><td>階数</td><td class="n">63.1%</td><td class="n">193 / 306</td></tr>
+            <tr><td>構造種別</td><td class="n">55.2%</td><td class="n">169 / 306</td></tr>
+            <tr><td>耐火構造</td><td class="n">50.3%</td><td class="n">154 / 306</td></tr>
+            <tr><td><strong>建築年</strong></td><td class="n g0">19.9%</td><td class="n">61 / 306</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>欠落は「ばらつき」ではなく「断絶」</h3>
+      <p>
+        構造種別と耐火構造には<strong>中間が1件も無い</strong>。用途は連続的にばらつくのに、この2つは◎か×しかない。
+        仕様で「入れる／入れない」が決まっているということで、だから自治体を1つ見て一般化できない。
+      </p>
+
+      <div class="scroll">
+        <table>
+          <caption>段階別の自治体数。中間（○△▲）がゼロなのは構造種別と耐火構造だけ。</caption>
+          <thead><tr><th>属性</th><th class="n">◎</th><th class="n">○</th><th class="n">△</th><th class="n">▲</th><th class="n">×</th></tr></thead>
+          <tbody>
+            <tr><td>構造種別</td><td class="n g4">169</td><td class="n g0">0</td><td class="n g0">0</td><td class="n g0">0</td><td class="n">137</td></tr>
+            <tr><td>耐火構造</td><td class="n g4">154</td><td class="n g0">0</td><td class="n g0">0</td><td class="n g0">0</td><td class="n">152</td></tr>
+            <tr><td>用途</td><td class="n">90</td><td class="n">146</td><td class="n">24</td><td class="n">8</td><td class="n">38</td></tr>
+            <tr><td>建築年</td><td class="n">3</td><td class="n">58</td><td class="n">56</td><td class="n">14</td><td class="n">175</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>建築年は県単位でまとまる</h3>
+      <p>
+        地図にすると、色が<strong>県境で切り替わる</strong>。
+        東京都は62自治体すべてが0%、神奈川県も8自治体すべてが0%。隣接する埼玉県は49自治体中36に入っている。
+      </p>
+
+      <div class="scroll">
+        <table>
+          <caption>県単位でまとまる分布は事実として観測されたもの。整備の発注単位が原因であることは未確認（推測）。</caption>
+          <thead><tr><th>都道府県</th><th class="n">建築年あり</th><th>内訳</th></tr></thead>
+          <tbody>
+            <tr><td>埼玉県</td><td class="n"><strong>36 / 49</strong></td><td class="f">○19 △17 ▲7 ×6</td></tr>
+            <tr><td>静岡県</td><td class="n"><strong>21 / 35</strong></td><td class="f">◎3 ○16 △2 ×14</td></tr>
+            <tr><td>福岡県</td><td class="n">8 / 9</td><td class="f">○4 △4 ▲1</td></tr>
+            <tr><td>福島県</td><td class="n">5 / 6</td><td class="f">○1 △4 ×1</td></tr>
+            <tr><td>東京都</td><td class="n g0">0 / 62</td><td class="f">×62</td></tr>
+            <tr><td>神奈川県</td><td class="n g0">0 / 8</td><td class="f">×8</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>◎（90%以上）は3自治体しかなく、<strong>いずれも静岡県</strong>。</p>
+    </section>
+
+    <section id="map">
+      <h2>地図の作り方</h2>
+      <p>
+        表では「埼玉36」としか言えないものを、絵にする。
+        背景は47都道府県の輪郭で、その上に306自治体を段階色で塗る。
+        <strong>県境が見えることが目的</strong>なので、県単位への融合は省けない。
+      </p>
+      <ul>
+        <li>境界は国土数値情報 N03（2025年1月1日版）。zipの <code>.geojson</code> メンバだけをレンジ要求で取る（1県あたり約4.5MB、全国で154MB）</li>
+        <li>融合と単純化はDuckDB spatialの <code>ST_Union_Agg</code> と <code>ST_SimplifyPreserveTopology</code></li>
+        <li>幅1000pxで日本全体（経度約18度）を描くと1px≒0.018度なので、県輪郭は0.012度、自治体は0.005度まで単純化する</li>
+        <li>出力は素のSVG。<strong>依存ライブラリなしという性格を崩さない</strong></li>
+        <li>沖縄は位置だけ移動し、<strong>縮尺は本土と同じ</strong>にした。変えると那覇市の大きさを他と比べられなくなる</li>
+        <li>小笠原村はPLATEAU整備済だが北緯27度で本土の縮尺を壊すため、図示せず地図上に注記した</li>
+      </ul>
+      <p>47県で23分、転送154MB。中間の <code>map_geom.json</code> が684KB、出力SVGが411KB。</p>
+    </section>
+
+    <section id="run">
+      <h2>走らせ方</h2>
+      <pre><code><span class="c"># 1. 自治体コードと日本語名の対応を取る（306件）</span>
+python scripts/names.py
+
+<span class="c"># 2. 全国走査。約75分・転送4.7GB。途中保存があるので中断しても続行できる</span>
+python scripts/scan.py
+
+<span class="c"># 3. 地図。約23分・転送154MB。境界はディスクにキャッシュされる</span>
+python scripts/build_map.py
+python scripts/render_map.py
+
+<span class="c"># 4. ビューアを開く（依存ライブラリなし）</span>
+python -m http.server --directory web</code></pre>
+      <p>
+        走査は途中保存があるので、中断しても同じコマンドで続きから走る。
+        すでに <code>status: "ok"</code> の自治体は飛ばす。
+      </p>
+    </section>
+
+    <section id="verify">
+      <h2>検証の仕組み</h2>
+      <p>
+        走査をやり直すたびに、スライドやビューアに古い数字が残る。目視では必ず見落とすので機械で照合する。
+        実際にこの2本が、目で見て気づかなかった不具合を見つけている。
+      </p>
+
+      <div class="scroll">
+        <table>
+          <caption>応募前に両方を通す。どちらかが赤なら提出しない。</caption>
+          <thead><tr><th>検査</th><th>何を見るか</th><th>見つけた実例</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="f">check_deck.py</td>
+              <td>スライドの数値を <code>carte.json</code> から再計算して突き合わせる</td>
+              <td>ビューア本体に古い「305自治体・2,381,135棟」が残っていた</td>
+            </tr>
+            <tr>
+              <td class="f">check_overflow.mjs</td>
+              <td>全19枚について、要素が枠の下端を超えていないか</td>
+              <td>10枚目の画像が枠を40px超えてフッタに重なっていた</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>主張から外したもの</h3>
+      <p>
+        「属性が下流の推定を改善する」ことの実証は2回試して2回とも成立しなかった。
+        1回目は計測震度を全域一定と仮定して支配要因を欠き、順序が逆転。
+        2回目は震度メッシュを入れて n=18 では並んだが、n=33 に増やすと崩れた。<strong>再現しないので使わない。</strong>
+      </p>
+      <p>
+        建築年の値そのものの正しさも検証を試みたが、公的リストが建物名で識別するのにPLATEAUに名称が無く、
+        街区内の突合が別々の建物を同一に潰した。測っていたのは突合方法の質だった。これも外した。
+      </p>
+    </section>
+
+    <section id="traps">
+      <h2>踏んだ罠</h2>
+      <p>いずれも実際に間違った結果を出したもの。同じことをする人が引っかかる。</p>
+
+      <div class="scroll">
+        <table>
+          <caption>上4件は走査の、下3件は地図の実装で踏んだもの。</caption>
+          <thead><tr><th>罠</th><th>何が起きたか</th><th>対処</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>メッシュをコード順に取る</td>
+              <td>市域の縁を引いて<strong>建物0件</strong>になった（台東区）。札幌でn=9、福岡でn=4</td>
+              <td>非圧縮サイズの大きいメッシュを選ぶ</td>
+            </tr>
+            <tr>
+              <td>CKANリソースを名前順の最後で取る</td>
+              <td>「【uc25-16】…のCityGMLデータ」のような<strong>ユースケース個別データ</strong>を拾い、市域全体ではなく小さな実証区域だけを読んでいた。台東区0件、堺市n=145</td>
+              <td>名前が「CityGML」で始まるものを優先</td>
+            </tr>
+            <tr>
+              <td>自治体コードの手作業転記</td>
+              <td>22221を別の市だと思い込み、<strong>企画を1つ誤って中止</strong>した</td>
+              <td>306自治体を手で照合しない。道具にする</td>
+            </tr>
+            <tr>
+              <td>小地域を市区町村で絞らない</td>
+              <td>市境の建物が隣接自治体に落ち、荒川区の人口が2.3倍に膨れた</td>
+              <td><code>KEY_CODE</code> 先頭5桁で絞る</td>
+            </tr>
+            <tr>
+              <td>17MBのgeojsonを自治体ごとに再パース</td>
+              <td>1県で35回の <code>ST_Read</code> になり実用外の時間になった</td>
+              <td>1回読んでテーブルに載せる</td>
+            </tr>
+            <tr>
+              <td>政令市の区をコードで集約</td>
+              <td>PLATEAUは静岡市22100・浜松市22130と区を持たないコードを使うが、N03は区で分かれる。<strong>区コードの規則が市ごとに違う</strong>（札幌01101〜01110の10区、浜松22138〜22140）</td>
+              <td>市名（<code>N03_004</code>）で集約する</td>
+            </tr>
+            <tr>
+              <td>メルカトルのy軸をそのまま使う</td>
+              <td>yは北ほど大きいが画面yは下ほど大きい。<strong>地図が上下反転して画面外へ飛んだ</strong></td>
+              <td>y方向だけ引き算の向きを逆にする</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="limits">
+      <h2>限界</h2>
+      <ul>
+        <li><strong>標本である。</strong>1自治体あたり建物数の多い3メッシュしか読んでいない。市域全体の充填率とは1.6〜17.6ポイントずれうる</li>
+        <li><strong>値の正しさは測っていない。</strong>入っているかどうかだけ。建築年が1877年と書いてあってもそれが正しいかは別の話</li>
+        <li><strong>必要条件でしかない。</strong>属性が揃っていても分析が成立するとは限らない。用途91.3%の中央区で人口推定の誤差は33.2%だった</li>
+        <li><strong>実測日が固定されている。</strong>PLATEAUは毎年度拡大するので、時間が経つほど古くなる。再走査は75分でできる</li>
+        <li><strong>ランキングにはしない。</strong>◎○△×を「成功予測」と誤読させるUIにはしない</li>
+      </ul>
+      <div class="note">
+        <p>
+          使う側だけでなく<strong>整備する側にも返る</strong>。建築年が入る117自治体は県単位で固まっているので、
+          実測は「どの発注仕様が充填を生んだか」を指す材料になる。
+        </p>
+      </div>
+    </section>
+
+    <section id="license">
+      <h2>出典とライセンス</h2>
+      <div class="scroll">
+        <table>
+          <caption>実行時の依存ライブラリはゼロなので、第三者の知的財産権の記載対象はデータのみ。開発時にはDuckDB spatialとpuppeteerを使っている。</caption>
+          <thead><tr><th>データ</th><th>提供</th><th>用途</th></tr></thead>
+          <tbody>
+            <tr><td>3D都市モデル（Project PLATEAU）<br><span style="color:var(--muted)">CC BY 4.0</span></td><td>国土交通省</td><td>走査の対象そのもの</td></tr>
+            <tr><td>属性情報公開リスト</td><td>国土交通省都市局</td><td>実測との突合（56都市・最終更新2021/8/6）</td></tr>
+            <tr><td>行政区域データ N03<br><span style="color:var(--muted)">国土数値情報 利用約款</span></td><td>国土交通省国土政策局</td><td>地図の境界</td></tr>
+            <tr><td>データセット一覧（CKAN API）</td><td>G空間情報センター<br><span style="color:var(--muted)">社会基盤情報流通推進協議会</span></td><td>自治体コードと日本語名</td></tr>
+            <tr><td>令和2年国勢調査 小地域</td><td>総務省統計局／e-Stat</td><td>人口推定の検証</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note warn">
+        <p>
+          出典：「3D都市モデル（Project PLATEAU）」（国土交通省）を加工して作成。
+          <strong>本作品に示す充填率は作成者が実測した値であり、国土交通省が公表した値ではありません。</strong>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      実測日 2026-08-19、各自治体の最新年度データが対象。本書は2026-08-30時点の構成。
+      再現手順は本書「走らせ方」のとおりで、誰でも同じ数字を出せる。
+    </p>
+  </footer>
+
+</div>
