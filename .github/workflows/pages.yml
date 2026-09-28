@@ -1,5 +1,6 @@
 # web/ だけを GitHub Pages に公開する。
 # リポジトリの Settings → Pages → Source を「GitHub Actions」にすると、main への push で公開される。
+# 部品は Node.js 24 で動く版（2026-09-28 時点の最新）。Node.js 20 の版は廃止予告が出ていた。
 name: Pages
 
 on:
@@ -24,10 +25,10 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/checkout@v7
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: web
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
