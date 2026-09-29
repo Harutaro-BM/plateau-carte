@@ -1,99 +1,147 @@
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PLATEAUカルテ</title>
 <style>
   :root{
     --bg:#fbfbfa; --fg:#1a1a19; --muted:#6b6b66; --line:#e2e2dd;
-    --card:#fff; --accent:#2f6f4f;
+    --card:#fff; --accent:#2f6f4f; --hi:#fff3d6;
     --g4:#1f7a4d; --g3:#5c9a3a; --g2:#c08a1e; --g1:#c0651e; --g0:#a33;
+    /* 地図の塗り（デッキの凡例と同じ色） */
+    --m4:#1f7a4d; --m3:#7fb069; --m2:#e0a83a; --m1:#d4762a; --m0:#c94f4f;
+    --mapbg:#e8e6e1; --mapline:#c9c5bd; --mapsel:#161f24;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
       --bg:#16181a; --fg:#e8e8e4; --muted:#9a9a94; --line:#2c2f33;
-      --card:#1d2023; --accent:#6fbf95;
+      --card:#1d2023; --accent:#6fbf95; --hi:#3a3220;
       --g4:#4fbf85; --g3:#8ec95f; --g2:#e0b040; --g1:#e08a4a; --g0:#e06a6a;
+      --mapbg:#2c2f33; --mapline:#3d4146; --mapsel:#f4f4f0;
     }
   }
   :root[data-theme="dark"]{
     --bg:#16181a; --fg:#e8e8e4; --muted:#9a9a94; --line:#2c2f33;
-    --card:#1d2023; --accent:#6fbf95;
+    --card:#1d2023; --accent:#6fbf95; --hi:#3a3220;
     --g4:#4fbf85; --g3:#8ec95f; --g2:#e0b040; --g1:#e08a4a; --g0:#e06a6a;
+    --mapbg:#2c2f33; --mapline:#3d4146; --mapsel:#f4f4f0;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--fg);
-    font-family:-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+    font-family:-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic UI",sans-serif;
     line-height:1.7;font-size:15px}
-  .wrap{max-width:1180px;margin:0 auto;padding:32px 20px 80px}
-  h1{font-size:1.7rem;margin:0 0 4px;letter-spacing:.01em}
-  .sub{color:var(--muted);margin:0 0 28px}
-  .lead{background:var(--card);border:1px solid var(--line);border-radius:10px;
-    padding:18px 20px;margin:0 0 24px}
-  .lead p{margin:0 0 10px}
-  .lead p:last-child{margin:0}
-  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 22px}
-  .stat{background:var(--card);border:1px solid var(--line);border-radius:9px;
-    padding:11px 16px;min-width:132px}
+  .wrap{max-width:1240px;margin:0 auto;padding:28px 20px 80px}
+  /* 大きな画面（動画の収録を含む）では横幅と文字を大きくして、中身が中央で小さくならないようにする */
+  @media (min-width:1500px){ body{font-size:16.5px} .wrap{max-width:1480px} }
+  header{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;margin:0 0 18px}
+  h1{font-size:1.75rem;margin:0;letter-spacing:.01em}
+  .sub{color:var(--muted);margin:0;flex:1 1 360px}
+  header a{font-size:.85rem}
+  h2{font-size:1.12rem;margin:34px 0 10px}
+  a{color:var(--accent)}
+  code{background:color-mix(in srgb,var(--fg) 8%,transparent);padding:1px 5px;border-radius:4px;font-size:.87em}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px}
+
+  /* ---------- 地図（主役）と詳細パネル ---------- */
+  .hero{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:18px;margin:0 0 26px}
+  @media (max-width:980px){ .hero{grid-template-columns:1fr} }
+  .mapcard{padding:14px 14px 12px;position:relative}
+  .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}
+  .seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .seg button{font:inherit;font-size:.84rem;border:0;background:transparent;color:var(--muted);
+    padding:5px 11px;cursor:pointer;border-right:1px solid var(--line)}
+  .seg button:last-child{border-right:0}
+  .seg button[aria-pressed="true"]{background:var(--accent);color:#fff;font-weight:600}
+  .seg button:hover:not([aria-pressed="true"]){color:var(--fg)}
+  .bar .spacer{flex:1}
+  .mapbox{position:relative;width:100%;aspect-ratio:1000/1108;max-height:78vh;margin:0 auto}
+  .mapbox svg{width:100%;height:100%;display:block}
+  .mapbox svg > g:first-of-type{fill:var(--mapbg);stroke:var(--mapline)}
+  .mapbox svg g[font-size="11"]{display:none}      /* 地図に焼き込まれた凡例は使わず、下のHTMLの凡例を使う */
+  .mapbox path[data-code]{cursor:pointer;transition:fill .35s}
+  .mapbox path[data-code]:hover{stroke:var(--mapsel);stroke-width:.8}
+  .mapbox path.sel{stroke:var(--mapsel);stroke-width:1.6}
+  .tip{position:absolute;pointer-events:none;background:rgba(18,24,28,.92);color:#fff;font-size:.82rem;
+    line-height:1.5;padding:6px 10px;border-radius:7px;white-space:nowrap;transform:translate(-50%,-115%);
+    opacity:0;transition:opacity .12s;z-index:5}
+  .tip.on{opacity:1}
+  .maplegend{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;font-size:.84rem;color:var(--muted);margin:8px 2px 2px}
+  .maplegend i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+  .maplegend b{color:var(--fg);font-variant-numeric:tabular-nums}
+  .insight{margin:8px 2px 0;font-size:.9rem}
+  .insight strong{color:var(--fg)}
+  .src{color:var(--muted);font-size:.76rem;margin:6px 2px 0}
+
+  .detail{padding:16px 18px}
+  .detail h3{margin:0;font-size:1.3rem}
+  .detail .meta{color:var(--muted);font-size:.85rem;margin:2px 0 12px}
+  .detail .empty{color:var(--muted)}
+  .attr{display:grid;grid-template-columns:5.2em 1fr 3.6em 1.4em;gap:8px;align-items:center;font-size:.88rem;margin:3px 0}
+  .attr .track{height:9px;background:color-mix(in srgb,var(--fg) 8%,transparent);border-radius:5px;overflow:hidden}
+  .attr .track div{height:100%;border-radius:5px}
+  .attr .pct{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+  .attr .gl{text-align:center;font-weight:700}
+  .attr.on{font-weight:600}
+  .detail h4{font-size:.86rem;color:var(--muted);margin:16px 0 6px;font-weight:600}
+  .an{font-size:.88rem;margin:3px 0}
+  .an .ok{color:var(--g4);font-weight:700} .an .ng{color:var(--muted);font-weight:700}
+  .an small{color:var(--muted)}
+  .vin{font-size:.86rem}
+  .vin .up{color:var(--g4);font-weight:600} .vin .dn{color:var(--g0);font-weight:600}
+  .detail .open{display:inline-block;margin-top:12px;font-size:.85rem}
+
+  /* ---------- 集計・表 ---------- */
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px}
+  .stat{padding:11px 16px;min-width:132px}
   .stat b{display:block;font-size:1.45rem;line-height:1.25;color:var(--accent)}
   .stat span{color:var(--muted);font-size:.83rem}
-  .ctl{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:0 0 14px}
+  .ctl{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:0 0 12px}
   input[type=search],select{background:var(--card);color:var(--fg);
     border:1px solid var(--line);border-radius:7px;padding:7px 11px;font:inherit;font-size:.9rem}
-  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;color:var(--muted);font-size:.85rem;margin:0 0 12px}
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card);max-height:70vh}
   table{border-collapse:collapse;width:100%;font-size:.88rem;min-width:900px}
   th,td{padding:7px 9px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
-  th{position:sticky;top:0;background:var(--card);font-weight:600;cursor:pointer;
-    font-size:.8rem;color:var(--muted);z-index:1}
+  th{position:sticky;top:0;background:var(--card);font-weight:600;cursor:pointer;font-size:.8rem;color:var(--muted);z-index:1}
   th:hover{color:var(--fg)}
+  tbody tr{cursor:pointer}
   tbody tr:hover{background:color-mix(in srgb,var(--accent) 7%,transparent)}
+  tbody tr.sel td{background:var(--hi)}
   td.g{text-align:center;font-weight:700;font-size:1rem}
-  .G4{color:var(--g4)} .G3{color:var(--g3)} .G2{color:var(--g2)}
-  .G1{color:var(--g1)} .G0{color:var(--g0)} .Gx{color:var(--muted)}
+  .G4{color:var(--g4)} .G3{color:var(--g3)} .G2{color:var(--g2)} .G1{color:var(--g1)} .G0{color:var(--g0)} .Gx{color:var(--muted)}
   td.can{text-align:center}
-  .yes{color:var(--g4);font-weight:700}
-  .no{color:var(--muted)}
+  .yes{color:var(--g4);font-weight:700} .no{color:var(--muted)}
   .num{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
-  h2{font-size:1.12rem;margin:34px 0 10px}
-  .note{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--g2);
-    border-radius:8px;padding:15px 18px;margin:14px 0}
-  .note p{margin:0 0 9px} .note p:last-child{margin:0}
-  code{background:color-mix(in srgb,var(--fg) 8%,transparent);padding:1px 5px;border-radius:4px;
-    font-size:.87em}
-  .legend{display:flex;flex-wrap:wrap;gap:16px;color:var(--muted);font-size:.85rem;margin:10px 0 18px}
-  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
-    color:var(--muted);font-size:.83rem}
-  a{color:var(--accent)}
 
-/* 全国地図。縦長なので幅を絞って中央に置く */
-.mapbox { margin: 6px 0 22px; text-align: center; }
-.mapbox img { width: 100%; max-width: 620px; height: auto; }
-@media (max-width: 700px) { .mapbox img { max-width: 100%; } }
+  .lead{padding:18px 20px;margin:0 0 10px}
+  .lead p{margin:0 0 10px} .lead p:last-child{margin:0}
+  .note{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--g2);border-radius:8px;padding:15px 18px;margin:14px 0}
+  .note p{margin:0 0 9px} .note p:last-child{margin:0}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.83rem}
 </style>
 
 <div class="wrap">
-  <h1>PLATEAUカルテ</h1>
-  <p class="sub">3D都市モデルの属性が、自治体ごとに<strong>実際どれだけ入っているか</strong>の実測</p>
+  <header>
+    <h1>PLATEAUカルテ</h1>
+    <p class="sub">3D都市モデルの建物属性が、自治体ごとに<strong>実際どれだけ入っているか</strong>を306自治体すべてで実測</p>
+    <a href="https://github.com/Harutaro-BM/plateau-carte">ソースコード</a>
+  </header>
 
-  <div class="lead">
-    <p>公式が公表しているのは「その属性が<strong>仕様上あるか</strong>」の一覧（○×）です。実測すると
-      <strong>両方向に食い違います</strong>。建築年が○のいわき市は実測42.0%、白河市は17.5%。
-      逆に空欄の宗像市は78.5%、北九州市は75.1%（いずれも2020年度データ同士の比較）。
-      <strong>○だから使えるとも、空欄だから使えないとも言えません。</strong>
-      なおこの公式一覧は56都市ぶんで、最終更新は2021年8月6日。
-      PLATEAUは現在306自治体で、<strong>残る250自治体には参照できる一覧がありません</strong>。</p>
-    <p>このカルテは<strong>全国306自治体・10,714,532棟</strong>のCityGMLを実際に開いて、属性の充填率を測ったものです。
-      使う前に「自分の街でその分析が成り立つか」が分かります。</p>
-    <p><strong>ただしカルテは「始められるか」に答えるもので、「うまくいくか」は保証しません。</strong>
-      属性が揃っていることは必要条件であって十分条件ではありません。</p>
-  </div>
-
-  <h2>建築年が入っているかは、県の事情で決まっている</h2>
-  <div class="note" style="margin-bottom:10px">
-    自治体別に塗ると、色が<strong>県境で切り替わります</strong>。
-    東京都は62自治体すべてが0%、神奈川県も8自治体すべてが0%。
-    隣接する埼玉県は49自治体中35に建築年が入っています。<br>
-    <span style="color:var(--muted)">境界データ：国土数値情報 行政区域データ（国土交通省）を加工して作成。
-    県単位でまとまる分布は事実として観測されたもので、整備の発注単位が原因であることは未確認（推測）。</span>
-  </div>
-  <div class="mapbox"><img src="map.svg" alt="建築年の充填率を自治体別に塗った日本地図。東京都と神奈川県は全て0%だが、隣接する埼玉県は色が付く"></div>
+  <section class="hero">
+    <div class="card mapcard">
+      <div class="bar">
+        <div class="seg" id="attrs" role="group" aria-label="地図に塗る属性"></div>
+        <span class="spacer"></span>
+        <div class="seg" id="regions" role="group" aria-label="表示範囲">
+          <button data-r="all" aria-pressed="true">全国</button><button data-r="kanto" aria-pressed="false">関東</button>
+        </div>
+      </div>
+      <div class="mapbox" id="mapbox" aria-label="自治体別の充填率の地図"></div>
+      <div class="tip" id="tip"></div>
+      <div class="maplegend" id="maplegend"></div>
+      <p class="insight" id="insight"></p>
+      <p class="src">境界：国土数値情報 行政区域データ（国土交通省）を加工して作成。灰色は PLATEAU の整備が無い自治体。小笠原村は地図の範囲外。</p>
+    </div>
+    <aside class="card detail" id="detail" aria-live="polite"></aside>
+  </section>
 
   <div class="stats" id="stats"></div>
 
@@ -108,20 +156,33 @@
       <option value="時系列比較">時系列比較ができる</option>
     </select>
   </div>
-
   <div class="legend">
     <span><b class="G4">◎</b> 90%以上</span>
     <span><b class="G3">○</b> 60〜90%</span>
     <span><b class="G2">△</b> 20〜60%</span>
     <span><b class="G1">▲</b> 0〜20%</span>
     <span><b class="G0">×</b> 0%（入っていない）</span>
+    <span>行を選ぶと、上に詳細が出ます</span>
   </div>
-
   <div class="tablewrap">
     <table>
       <thead><tr id="head"></tr></thead>
       <tbody id="body"></tbody>
     </table>
+  </div>
+
+  <h2>なぜ測るのか</h2>
+  <div class="card lead">
+    <p>公式が公表しているのは「その属性が<strong>仕様上あるか</strong>」の一覧（○×）です。実測すると
+      <strong>両方向に食い違います</strong>。建築年が○のいわき市は実測42.0%、白河市は17.5%。
+      逆に空欄の宗像市は78.5%、北九州市は75.1%（いずれも2020年度データ同士の比較）。
+      <strong>○だから使えるとも、空欄だから使えないとも言えません。</strong>
+      なおこの公式一覧は56都市ぶんで、最終更新は2021年8月6日。
+      PLATEAUは現在306自治体で、<strong>残る250自治体には参照できる一覧がありません</strong>。</p>
+    <p>このカルテは<strong>全国306自治体・10,714,532棟</strong>のCityGMLを実際に開いて、属性の充填率を測ったものです。
+      使う前に「自分の街でその分析が成り立つか」が分かります。</p>
+    <p><strong>ただしカルテは「始められるか」に答えるもので、「うまくいくか」は保証しません。</strong>
+      属性が揃っていることは必要条件であって十分条件ではありません。</p>
   </div>
 
   <h2>読み方</h2>
@@ -140,6 +201,8 @@
       「値が入っているが情報が無い」ものなので、充填率から除いています。</p>
     <p><strong>「年度」は整備年度で測量年ではありません。</strong>実際の測量年は
       <code>uro:surveyYear</code> にあります。時系列で使うなら必ずこちらを見てください。</p>
+    <p><strong>過去年度との比較。</strong>2年度以上ある133自治体のうち106件で、両年度に共通するメッシュだけを同じ方法で比べています。
+      古い年度が7z形式の25件（うち静岡県23件）は、部分的に読めないため比べていません。</p>
   </div>
 
   <h2>できる分析の判定基準</h2>
@@ -156,77 +219,229 @@
   <footer>
     出典：「3D都市モデル（Project PLATEAU）」（国土交通省／CC BY 4.0）を加工して作成。
     自治体名は「3D都市モデル（Project PLATEAU）ポータルサイト」（G空間情報センター）の
-    データセット名から取得し加工して作成。<br>
+    データセット名から取得し加工して作成。地図の境界は「国土数値情報（行政区域データ）」（国土交通省）を加工して作成。<br>
     <strong>本サイトに示す充填率は作成者が実測した値であり、国土交通省が公表した値ではありません。</strong>
-    実測日 2026-08-19。各自治体の最新年度データを対象。
+    実測日 2026-09-15（過去年度との比較は 2026-09-29）。各自治体の最新年度データを対象。
   </footer>
 </div>
 
 <script>
 const PREFS={"01":"北海道","02":"青森県","03":"岩手県","04":"宮城県","05":"秋田県","06":"山形県","07":"福島県","08":"茨城県","09":"栃木県","10":"群馬県","11":"埼玉県","12":"千葉県","13":"東京都","14":"神奈川県","15":"新潟県","16":"富山県","17":"石川県","18":"福井県","19":"山梨県","20":"長野県","21":"岐阜県","22":"静岡県","23":"愛知県","24":"三重県","25":"滋賀県","26":"京都府","27":"大阪府","28":"兵庫県","29":"奈良県","30":"和歌山県","31":"鳥取県","32":"島根県","33":"岡山県","34":"広島県","35":"山口県","36":"徳島県","37":"香川県","38":"愛媛県","39":"高知県","40":"福岡県","41":"佐賀県","42":"長崎県","43":"熊本県","44":"大分県","45":"宮崎県","46":"鹿児島県","47":"沖縄県"};
-const ATTRS=[["measured_height","高さ"],["usage","用途"],["storeys","階数"],["year_of_construction","建築年"],["structure_type","構造種別"],["fireproof","耐火構造"],["survey_year","測量年"],["lod1_height_type","高さ種別"]];
+const ATTRS=[["year_of_construction","建築年"],["structure_type","構造種別"],["fireproof","耐火構造"],["usage","用途"],["storeys","階数"],["measured_height","高さ"],["survey_year","測量年"],["lod1_height_type","高さ種別"]];
+const TABLE_ATTRS=[["measured_height","高さ"],["usage","用途"],["storeys","階数"],["year_of_construction","建築年"],["structure_type","構造種別"],["fireproof","耐火構造"],["survey_year","測量年"],["lod1_height_type","高さ種別"]];
+const LABEL=Object.fromEntries(ATTRS);
 const CANS=[["人口推定","人口"],["高さ解析","高さ解析"],["耐震_被害推定","耐震・被害"],["時系列比較","時系列"]];
+// 分析の条件（scan.py の derive と同じ）
+const RULES={"人口推定":[["usage",.6],["storeys",.6]],"高さ解析":[["measured_height",.9],["lod1_height_type",.6]],
+  "耐震_被害推定":[["year_of_construction",.4],["structure_type",.6]],"時系列比較":[["survey_year",.6]]};
+const CAN_LABEL={"人口推定":"人口推定","高さ解析":"高さ解析","耐震_被害推定":"耐震・被害推定","時系列比較":"時系列比較"};
+const GRADES=["◎","○","△","▲","×"];
 const GC={"◎":"G4","○":"G3","△":"G2","▲":"G1","×":"G0","-":"Gx"};
-let rows=[], sortKey="code", sortAsc=true;
+const MC={"◎":"var(--m4)","○":"var(--m3)","△":"var(--m2)","▲":"var(--m1)","×":"var(--m0)"};
+const RANGE={"◎":"90%以上","○":"60〜90%","△":"20〜60%","▲":"0〜20%","×":"0%"};
+const VIEW={all:[0,0,1000,1108],kanto:[505,636,270,178]};   // 関東は render_map.py の map-kanto.svg と同じ範囲
 
+let rows=[], byCode={}, vin={}, sortKey="code", sortAsc=true;
+const st={a:"year_of_construction", r:"all", c:""};
+let svg=null, curView=VIEW.all.slice();
+
+// ---------- URL（#a=…&r=…&c=…）に状態を持たせる。直リンクと、動画の収録で同じ画面を再現するため ----------
+function readHash(){
+  const h=new URLSearchParams(location.hash.slice(1));
+  // 指定が無い項目は既定に戻す（前の選択を引きずらない）
+  st.a=LABEL[h.get("a")]?h.get("a"):"year_of_construction";
+  st.r=VIEW[h.get("r")]?h.get("r"):"all";
+  st.c=h.get("c")||"";
+}
+function writeHash(){
+  const h=new URLSearchParams();
+  if(st.a!=="year_of_construction") h.set("a",st.a);
+  if(st.r!=="all") h.set("r",st.r);
+  if(st.c) h.set("c",st.c);
+  const s=h.toString();
+  history.replaceState(null,"",s?"#"+s:location.pathname+location.search);
+}
+
+// ---------- 地図 ----------
+function paint(){
+  if(!svg) return;
+  svg.querySelectorAll("path[data-code]").forEach(p=>{
+    const r=byCode[p.dataset.code]; const g=r&&r.grade[st.a];
+    p.style.fill=MC[g]||"var(--mapbg)";
+    p.classList.toggle("sel",p.dataset.code===st.c);
+  });
+  const sel=st.c&&svg.querySelector(`path[data-code="${st.c}"]`);
+  if(sel) sel.parentNode.appendChild(sel);      // 選んだ自治体の枠線を最前面に
+  // 凡例：段階ごとの自治体数
+  const ok=rows.filter(r=>r.status==="ok");
+  const cnt=Object.fromEntries(GRADES.map(g=>[g,ok.filter(r=>r.grade[st.a]===g).length]));
+  document.getElementById("maplegend").innerHTML=`<span style="color:var(--fg);font-weight:600">${LABEL[st.a]}の充填率</span>`+
+    GRADES.map(g=>`<span><i style="background:${MC[g]}"></i>${g} ${RANGE[g]} <b>${cnt[g]}</b></span>`).join("");
+  // ひとこと：その属性で目立つ事実を、データから機械的に出す
+  const n=ok.length, good=cnt["◎"]+cnt["○"], mid=cnt["○"]+cnt["△"]+cnt["▲"];
+  let t=`◎＋○の自治体は <strong>${good} / ${n}</strong>（${(good/n*100).toFixed(1)}%）。`;
+  if(mid===0) t+=` <strong>中間の段階（○△▲）が1件も無い。</strong>入っているか、全く無いかの二値で、整備の仕様で決まっている。`;
+  else if(st.a==="year_of_construction"){
+    const pz=p=>{const rs=ok.filter(r=>r.code.startsWith(p));return [rs.filter(r=>"◎○△".includes(r.grade[st.a])).length,rs.length]};
+    const [t1,t2]=pz("13"),[s1,s2]=pz("11");
+    t+=` 色は<strong>県境で切り替わる</strong>。東京都は${t2}自治体中${t1}、隣の埼玉県は${s2}自治体中${s1}で20%以上入っている。`;
+  }
+  document.getElementById("insight").innerHTML=t;
+  document.querySelectorAll("#attrs button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.a===st.a));
+  document.querySelectorAll("#regions button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.r===st.r));
+}
+// 範囲を枠の縦横比に合わせて広げる（範囲の全体は必ず入れる）。関東は横長、枠は縦長なので、そのままだと上下が空く
+function fitView(r){
+  const [x,y,w,h]=VIEW[r], b=document.getElementById("mapbox").getBoundingClientRect();
+  if(!b.width||!b.height) return VIEW[r].slice();
+  const a=b.width/b.height;
+  if(w/h>a){ const h2=w/a; return [x,y-(h2-h)/2,w,h2]; }
+  const w2=h*a; return [x-(w2-w)/2,y,w2,h];
+}
+function zoomTo(r,instant){
+  if(!svg) return;
+  const to=fitView(r), from=curView.slice();
+  if(instant||matchMedia("(prefers-reduced-motion: reduce)").matches){ curView=to.slice(); svg.setAttribute("viewBox",to.join(" ")); return; }
+  const t0=performance.now(), D=900, ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+  (function step(t){
+    const k=Math.min(1,(t-t0)/D), e=ease(k);
+    curView=from.map((v,i)=>v+(to[i]-v)*e);
+    svg.setAttribute("viewBox",curView.join(" "));
+    if(k<1) requestAnimationFrame(step);
+  })(t0);
+}
+function setupMap(text){
+  const box=document.getElementById("mapbox");
+  box.innerHTML=text;
+  svg=box.querySelector("svg");
+  svg.removeAttribute("width");
+  svg.querySelectorAll("path[data-code] title").forEach(t=>t.remove());  // 自前のツールチップを使う
+  const tip=document.getElementById("tip"), card=box.parentNode;
+  svg.addEventListener("mousemove",e=>{
+    const p=e.target.closest("path[data-code]");
+    if(!p){tip.classList.remove("on");return;}
+    const r=byCode[p.dataset.code]; if(!r) return;
+    const b=card.getBoundingClientRect();
+    tip.style.left=(e.clientX-b.left)+"px"; tip.style.top=(e.clientY-b.top)+"px";
+    tip.innerHTML=`<b>${r.name||r.slug}</b>（${r.pref}）<br>${LABEL[st.a]} ${r.grade[st.a]} ${(r.fill[st.a]*100).toFixed(1)}%`;
+    tip.classList.add("on");
+  });
+  svg.addEventListener("mouseleave",()=>tip.classList.remove("on"));
+  svg.addEventListener("click",e=>{
+    const p=e.target.closest("path[data-code]"); if(p) select(p.dataset.code,true);
+  });
+  zoomTo(st.r,true);
+  paint();
+}
+
+// ---------- 詳細パネル ----------
+function pct(v){return v==null?"—":(v*100).toFixed(1)+"%"}
+function detail(){
+  const el=document.getElementById("detail"), r=byCode[st.c];
+  if(!r){
+    const ok=rows.filter(x=>x.status==="ok");
+    el.innerHTML=`<h3>地図か表から自治体を選ぶ</h3>
+      <p class="meta">全国 ${ok.length}自治体・標本 ${ok.reduce((s,x)=>s+x.nSample,0).toLocaleString()}棟</p>
+      <p class="empty">選ぶと、8つの属性の充填率、4つの分析を始められるか（足りない条件）、過去年度との比較、元データへのリンクがここに出ます。</p>
+      <p class="empty">上のボタンで地図に塗る属性を切り替えられます。<strong>構造種別</strong>を選ぶと、中間の色が1つも無いことが分かります。</p>`;
+    return;
+  }
+  const bars=TABLE_ATTRS.map(([k,l])=>{const g=r.grade[k]||"-",f=r.fill[k]||0;
+    return `<div class="attr${k===st.a?" on":""}"><span>${l}</span><div class="track"><div style="width:${Math.max(f*100,f>0?1.5:0)}%;background:${MC[g]||"var(--muted)"}"></div></div>
+      <span class="pct">${pct(r.fill[k])}</span><span class="gl ${GC[g]}">${g}</span></div>`}).join("");
+  const ans=Object.keys(RULES).map(k=>{
+    const miss=RULES[k].filter(([a,th])=>(r.fill[a]||0)<th);
+    return `<div class="an">${r.can[k]?'<span class="ok">可</span>':'<span class="ng">不可</span>'} ${CAN_LABEL[k]}
+      ${miss.length?`<small>（${miss.map(([a,th])=>`${LABEL[a]} ${pct(r.fill[a])} &lt; ${th*100}%`).join("、")}）</small>`:""}</div>`}).join("");
+  const v=vin[r.code];
+  let vh;
+  if(!v) vh=`<p class="vin empty">データは1年度のみ。</p>`;
+  else if(v.status!=="ok") vh=`<p class="vin empty">比べていない（${/BadZip/.test(v.status)?"古い年度が7z形式で部分的に読めない":"古い年度のデータが見つからない"}）。</p>`;
+  else{
+    const O="×▲△○◎";
+    const ch=TABLE_ATTRS.filter(([k])=>v.gradeOld[k]!==v.gradeNew[k]).map(([k,l])=>{
+      const up=O.indexOf(v.gradeNew[k])>O.indexOf(v.gradeOld[k]);
+      return `<span class="${up?"up":"dn"}">${l} ${v.gradeOld[k]}→${v.gradeNew[k]}</span>`});
+    vh=`<p class="vin">${v.yearOld}→${v.yearNew}年度（共通メッシュ ${Math.round(v.commonRatio*100)}%）：${ch.length?ch.join("、"):"段階の変化なし"}</p>`;
+  }
+  const ds=`https://www.geospatial.jp/ckan/dataset/plateau-${r.code}-${r.slug}-${r.year}`;
+  el.innerHTML=`<h3>${r.name||r.slug}</h3>
+    <p class="meta">${r.pref}・${r.code}・${r.year}年度（${r.spec||""}）・標本 ${r.nSample.toLocaleString()}棟／${r.meshes.length}メッシュ</p>
+    ${bars}
+    <h4>始められる分析</h4>${ans}
+    <h4>過去年度との比較</h4>${vh}
+    <a class="open" href="${ds}" target="_blank" rel="noopener">G空間情報センターでこのデータセットを開く</a>`;
+}
+function select(code,scrollRow){
+  st.c=(st.c===code)?"":code;
+  writeHash(); paint(); detail();
+  document.querySelectorAll("#body tr").forEach(tr=>tr.classList.toggle("sel",tr.dataset.code===st.c));
+  if(scrollRow&&st.c){const tr=document.querySelector(`#body tr[data-code="${st.c}"]`); if(tr) tr.scrollIntoView({block:"nearest"});}
+}
+
+// ---------- 表 ----------
 function head(){
   const h=document.getElementById("head");
   const cols=[["code","コード"],["name","自治体"],["pref","都道府県"],["year","年度"],["nSample","標本"]]
-    .concat(ATTRS.map(([k,l])=>["g_"+k,l]))
-    .concat(CANS.map(([k,l])=>["c_"+k,l]));
+    .concat(TABLE_ATTRS.map(([k,l])=>["g_"+k,l])).concat(CANS.map(([k,l])=>["c_"+k,l]));
   h.innerHTML=cols.map(([k,l])=>`<th data-k="${k}">${l}</th>`).join("");
   h.querySelectorAll("th").forEach(th=>th.onclick=()=>{
-    const k=th.dataset.k;
-    if(sortKey===k) sortAsc=!sortAsc; else {sortKey=k; sortAsc=true;}
-    render();
+    const k=th.dataset.k; if(sortKey===k) sortAsc=!sortAsc; else {sortKey=k; sortAsc=true;} render();
   });
 }
 function val(r,k){
   if(k.startsWith("g_")) return "◎○△▲×-".indexOf(r.grade[k.slice(2)]);
   if(k.startsWith("c_")) return r.can[k.slice(2)]?0:1;
-  if(k==="pref") return r.pref;
-  if(k==="name") return r.name||r.slug;
+  if(k==="pref") return r.pref; if(k==="name") return r.name||r.slug;
   return r[k];
 }
 function render(){
   const q=document.getElementById("q").value.trim().toLowerCase();
-  const p=document.getElementById("pref").value;
-  const c=document.getElementById("can").value;
+  const p=document.getElementById("pref").value, c=document.getElementById("can").value;
   let f=rows.filter(r=>r.status==="ok");
   if(q) f=f.filter(r=>(r.name||"").toLowerCase().includes(q)||r.code.includes(q)||r.slug.includes(q));
   if(p) f=f.filter(r=>r.code.slice(0,2)===p);
   if(c) f=f.filter(r=>r.can[c]);
-  f.sort((a,b)=>{
-    const x=val(a,sortKey), y=val(b,sortKey);
-    const s=(x>y)-(x<y);
-    return sortAsc?s:-s;
-  });
-  document.getElementById("body").innerHTML=f.map(r=>`<tr>
+  f.sort((a,b)=>{const x=val(a,sortKey),y=val(b,sortKey),s=(x>y)-(x<y);return sortAsc?s:-s;});
+  document.getElementById("body").innerHTML=f.map(r=>`<tr data-code="${r.code}"${r.code===st.c?' class="sel"':""}>
     <td class="num">${r.code}</td><td>${r.name||r.slug}</td><td>${r.pref}</td>
     <td class="num">${r.year||"-"}</td><td class="num">${(r.nSample||0).toLocaleString()}</td>
-    ${ATTRS.map(([k])=>{const g=r.grade[k]||"-";return `<td class="g ${GC[g]}">${g}</td>`}).join("")}
+    ${TABLE_ATTRS.map(([k])=>{const g=r.grade[k]||"-";return `<td class="g ${GC[g]}">${g}</td>`}).join("")}
     ${CANS.map(([k])=>`<td class="can ${r.can[k]?"yes":"no"}">${r.can[k]?"可":"—"}</td>`).join("")}
   </tr>`).join("");
   stats(f);
 }
 function stats(f){
-  const n=f.length;
-  const cnt=k=>f.filter(r=>r.can[k]).length;
+  const n=f.length, cnt=k=>f.filter(r=>r.can[k]).length;
   const yr=f.filter(r=>"◎○△".includes(r.grade.year_of_construction)).length;
   document.getElementById("stats").innerHTML=`
-    <div class="stat"><b>${n}</b><span>表示中の自治体</span></div>
-    <div class="stat"><b>${cnt("人口推定")}</b><span>人口推定ができる</span></div>
-    <div class="stat"><b>${yr}</b><span>建築年が20%以上入る</span></div>
-    <div class="stat"><b>${cnt("耐震_被害推定")}</b><span>耐震・被害推定ができる</span></div>
-    <div class="stat"><b>${cnt("時系列比較")}</b><span>時系列比較ができる</span></div>`;
+    <div class="card stat"><b>${n}</b><span>表示中の自治体</span></div>
+    <div class="card stat"><b>${cnt("人口推定")}</b><span>人口推定ができる</span></div>
+    <div class="card stat"><b>${yr}</b><span>建築年が20%以上入る</span></div>
+    <div class="card stat"><b>${cnt("耐震_被害推定")}</b><span>耐震・被害推定ができる</span></div>
+    <div class="card stat"><b>${cnt("時系列比較")}</b><span>時系列比較ができる</span></div>`;
 }
-Promise.all([fetch("carte.json").then(r=>r.json()),
-             fetch("names.json").then(r=>r.json()).catch(()=>({}))])
-.then(([d,names])=>{
+
+// ---------- 起動 ----------
+document.getElementById("attrs").innerHTML=ATTRS.map(([k,l])=>`<button data-a="${k}" aria-pressed="false">${l}</button>`).join("");
+document.getElementById("attrs").onclick=e=>{const b=e.target.closest("button"); if(!b) return; st.a=b.dataset.a; writeHash(); paint(); detail();};
+document.getElementById("regions").onclick=e=>{const b=e.target.closest("button"); if(!b) return; st.r=b.dataset.r; writeHash(); zoomTo(st.r); paint();};
+document.getElementById("body").onclick=e=>{const tr=e.target.closest("tr[data-code]"); if(tr) select(tr.dataset.code,false);};
+readHash();
+Promise.all([
+  fetch("carte.json").then(r=>r.json()),
+  fetch("names.json").then(r=>r.json()).catch(()=>({})),
+  fetch("vintage.json").then(r=>r.json()).catch(()=>({})),
+  fetch("map.svg").then(r=>r.text())
+]).then(([d,names,v,mapText])=>{
   rows=d.cities.map(c=>({...c,name:names[c.code]||"",pref:PREFS[c.code.slice(0,2)]||""}));
+  byCode=Object.fromEntries(rows.map(r=>[r.code,r])); vin=v;
   const ps=[...new Set(rows.map(r=>r.code.slice(0,2)))].sort();
   document.getElementById("pref").innerHTML+=ps.map(p=>`<option value="${p}">${PREFS[p]||p}</option>`).join("");
-  head(); render();
+  head(); render(); setupMap(mapText); detail();
   ["q","pref","can"].forEach(id=>document.getElementById(id).oninput=render);
+  window.addEventListener("hashchange",()=>{readHash(); zoomTo(st.r); paint(); detail(); render();});
+  window.addEventListener("resize",()=>zoomTo(st.r,true));
+  document.body.dataset.ready="1";     // 自動収録・検査が「描画完了」を待つための印
 });
 </script>

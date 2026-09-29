@@ -38,6 +38,16 @@ def main():
         shutil.copy(ROOT / "data" / f, ROOT / "web" / f)
         print("web/%s を更新" % f)
 
+    # 過去年度との比較。ビューアの詳細パネルが読むので、使う項目だけに絞って配る（元は約180KB）
+    vc = ROOT / "data" / "vintage_compare.json"
+    if vc.exists():
+        keep = ("status", "yearOld", "yearNew", "commonRatio", "gradeOld", "gradeNew")
+        slim = {c["code"]: {k: c[k] for k in keep if k in c}
+                for c in json.loads(vc.read_text(encoding="utf-8"))["cities"]}
+        (ROOT / "web" / "vintage.json").write_text(
+            json.dumps(slim, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+        print("web/vintage.json を更新（%d件）" % len(slim))
+
     # デッキは自前の地図コピーを参照する。render_map は web/ にしか書かないので
     # ここで配布しないと、PDFだけ旧データの地図のまま出来上がる（実際にやった）
     # 応募デッキは公開リポジトリに含めないので、手元に award/deck がある場合だけ配る
