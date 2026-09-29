@@ -1,0 +1,67 @@
+{
+ "nCompared": 106,
+ "nTotal": 133,
+ "notCompared": {
+  "データセット見つからず（旧）": 2,
+  "7z（部分読み不可）": 25
+ },
+ "byKey": {
+  "measured_height": {
+   "up": 28,
+   "same": 74,
+   "down": 4,
+   "medianDeltaPt": 1.0
+  },
+  "usage": {
+   "up": 23,
+   "same": 83,
+   "down": 0,
+   "medianDeltaPt": 2.4
+  },
+  "storeys": {
+   "up": 22,
+   "same": 84,
+   "down": 0,
+   "medianDeltaPt": 1.9
+  },
+  "year_of_construction": {
+   "up": 5,
+   "same": 98,
+   "down": 3,
+   "medianDeltaPt": 0.0
+  },
+  "structure_type": {
+   "up": 22,
+   "same": 83,
+   "down": 1,
+   "medianDeltaPt": 0.0
+  },
+  "fireproof": {
+   "up": 13,
+   "same": 93,
+   "down": 0,
+   "medianDeltaPt": 0.0
+  },
+  "survey_year": {
+   "up": 15,
+   "same": 86,
+   "down": 5,
+   "medianDeltaPt": 0.0
+  },
+  "lod1_height_type": {
+   "up": 3,
+   "same": 103,
+   "down": 0,
+   "medianDeltaPt": 0.0
+  }
+ },
+ "anyUp": 73,
+ "anyDown": 10,
+ "both": 9,
+ "noChange": 32,
+ "drops20": 6,
+ "tokyo": {
+  "n": 53,
+  "yearZeroBoth": 53
+ }
+}

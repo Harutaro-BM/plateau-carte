@@ -34,8 +34,6 @@ data/kosai_weighted.csv
 # --- 公的リストの建物名・住所を含む突合記録（結論は docs/02-verify-year.md に記載） ---
 data/verify_year.json
 
-# --- 過去年度比較。2026-10-15 に採否を決めてから、採用なら外す ---
-data/vintage_compare.json
 
 # --- 応募デッキ専用の照合ツール（デッキ本体を公開しないので単体では動かない） ---
 scripts/check_deck.py
