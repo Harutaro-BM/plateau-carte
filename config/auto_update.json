@@ -1,0 +1,6 @@
+{
+  "enabled": false,
+  "notBefore": "2027-02-28",
+  "reason": "PLATEAU AWARD 2026 の最終審査（2027-02-27）までは、応募資料（デッキ・動画・フォーム）と公開ページの数値を一致させておくため、自動の再走査を止める。検知だけは毎月動かして結果を Actions の記録に出す。",
+  "howToEnable": "審査の後、enabled を true にして push する。notBefore より前の日付では enabled でも走査しない（二重の止め）。"
+}

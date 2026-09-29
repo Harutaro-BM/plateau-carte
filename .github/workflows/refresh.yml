@@ -1,0 +1,47 @@
+# PLATEAU の更新に追従する。毎月、更新を検知し、フラグが開いていれば変わった自治体だけ走査し直す。
+#
+# フラグは config/auto_update.json。enabled が true で、かつ notBefore 以降のときだけ走査する。
+# それ以外（審査が終わるまでの間）は検知だけ行い、結果をこの実行の Summary に出す。リポジトリは変えない。
+name: Refresh
+
+on:
+  schedule:
+    - cron: "0 18 1 * *"      # 毎月2日 3:00（日本時間）
+  workflow_dispatch:
+
+permissions:
+  contents: write              # 走査し直した結果をコミットする
+  actions: write               # 公開用ワークフロー（pages.yml）を起動する
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: 地図の生成に使う DuckDB を入れる
+        run: pip install duckdb pandas
+      - name: 検知（フラグが開いていれば再走査）
+        id: refresh
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python scripts/refresh.py
+      - name: 走査し直した結果をコミットして公開する
+        if: steps.refresh.outputs.applied == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data web
+          git commit -m "PLATEAU の更新に追従して ${{ steps.refresh.outputs.count }} 自治体を再走査（自動）"
+          git push
+          # GITHUB_TOKEN での push は他のワークフローを起動しないので、公開は明示的に呼ぶ
+          gh workflow run pages.yml
