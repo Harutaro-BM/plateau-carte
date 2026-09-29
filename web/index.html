@@ -87,6 +87,12 @@
   .vin{font-size:.86rem}
   .vin .up{color:var(--g4);font-weight:600} .vin .dn{color:var(--g0);font-weight:600}
   .detail .open{display:inline-block;margin-top:12px;font-size:.85rem}
+  .offtab{width:100%;border-collapse:collapse;font-size:.9rem;margin:6px 0 10px;min-width:0}
+  .offtab th,.offtab td{padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+  .offtab th{position:static;font-size:.78rem;color:var(--muted);cursor:default}
+  .offtab tr[data-code]{cursor:pointer}
+  .offtab tr[data-code]:hover td{background:color-mix(in srgb,var(--accent) 7%,transparent)}
+  .offtab td.m{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
 
   /* ---------- 集計・表 ---------- */
   .stats{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px}
@@ -246,7 +252,11 @@ const MC={"◎":"var(--m4)","○":"var(--m3)","△":"var(--m2)","▲":"var(--m1)
 const RANGE={"◎":"90%以上","○":"60〜90%","△":"20〜60%","▲":"0〜20%","×":"0%"};
 const VIEW={all:[0,0,1000,1108],kanto:[505,636,270,178]};   // 関東は render_map.py の map-kanto.svg と同じ範囲
 
-let rows=[], byCode={}, vin={}, sortKey="code", sortAsc=true;
+// 公式の「属性情報公開リスト」（2020年版・56都市）の建築年の欄。スライド2枚目と同じ4市（いずれも2020年度の同じデータ）
+// 並び順を保つため配列で持つ（数字だけのキーは、オブジェクトでは数の順に並び替えられてしまう）
+const OFFICIAL_LIST=[["07204","○"],["07205","○"],["40220","空欄"],["40100","空欄"]];
+const OFFICIAL=Object.fromEntries(OFFICIAL_LIST);
+let rows=[], byCode={}, vin={}, zips={}, sortKey="code", sortAsc=true;
 const st={a:"year_of_construction", r:"all", c:""};
 let svg=null, curView=VIEW.all.slice();
 
@@ -345,10 +355,15 @@ function detail(){
   const el=document.getElementById("detail"), r=byCode[st.c];
   if(!r){
     const ok=rows.filter(x=>x.status==="ok");
-    el.innerHTML=`<h3>地図か表から自治体を選ぶ</h3>
-      <p class="meta">全国 ${ok.length}自治体・標本 ${ok.reduce((s,x)=>s+x.nSample,0).toLocaleString()}棟</p>
-      <p class="empty">選ぶと、8つの属性の充填率、4つの分析を始められるか（足りない条件）、過去年度との比較、元データへのリンクがここに出ます。</p>
-      <p class="empty">上のボタンで地図に塗る属性を切り替えられます。<strong>構造種別</strong>を選ぶと、中間の色が1つも無いことが分かります。</p>`;
+    const off=OFFICIAL_LIST.map(([c])=>byCode[c]).filter(Boolean).map(x=>{
+      const f=x.fill.year_of_construction, g=x.grade.year_of_construction;
+      return `<tr data-code="${x.code}"><td>${x.name||x.slug}</td><td>${OFFICIAL[x.code]}</td><td class="m ${GC[g]}">${pct(f)}</td></tr>`}).join("");
+    el.innerHTML=`<h3>公式の一覧と、実際に開いた結果</h3>
+      <p class="meta">建築年。公式の属性情報公開リスト（2020年版・56都市）と、カルテの実測。どちらも2020年度の同じデータ</p>
+      <table class="offtab"><thead><tr><th>自治体</th><th>公式一覧</th><th style="text-align:right">実測</th></tr></thead><tbody>${off}</tbody></table>
+      <p class="empty">○でも2割に届かない街と、空欄でも8割近い街がある。<strong>仕様の○×は、実測の代わりにならない。</strong>
+        しかも公式の一覧は56都市ぶんで、残る250自治体には一覧そのものが無い。</p>
+      <p class="empty">地図か表で自治体を選ぶと、8属性の充填率、始められる分析、過去年度との比較がここに出ます（全国 ${ok.length}自治体・標本 ${ok.reduce((s,x)=>s+x.nSample,0).toLocaleString()}棟）。</p>`;
     return;
   }
   const bars=TABLE_ATTRS.map(([k,l])=>{const g=r.grade[k]||"-",f=r.fill[k]||0;
@@ -369,12 +384,16 @@ function detail(){
       return `<span class="${up?"up":"dn"}">${l} ${v.gradeOld[k]}→${v.gradeNew[k]}</span>`});
     vh=`<p class="vin">${v.yearOld}→${v.yearNew}年度（共通メッシュ ${Math.round(v.commonRatio*100)}%）：${ch.length?ch.join("、"):"段階の変化なし"}</p>`;
   }
+  const gb=b=>b>=1e8?(b/1e9).toFixed(2)+"GB":(b/1e6).toFixed(0)+"MB";
+  const z=zips[r.code];
+  const zh=z?`<h4>このデータを落とすと</h4><p class="vin">zip ${gb(z[0])}（うち建物 ${gb(z[1])}、${(z[1]/z[0]*100).toFixed(1)}%）。カルテは目次と建物の一部だけを読む。</p>`:"";
+  const oh=OFFICIAL[r.code]?`<p class="vin">公式の属性一覧（2020年版）では、建築年は「${OFFICIAL[r.code]}」。実測は ${pct(r.fill.year_of_construction)}。</p>`:"";
   const ds=`https://www.geospatial.jp/ckan/dataset/plateau-${r.code}-${r.slug}-${r.year}`;
   el.innerHTML=`<h3>${r.name||r.slug}</h3>
     <p class="meta">${r.pref}・${r.code}・${r.year}年度（${r.spec||""}）・標本 ${r.nSample.toLocaleString()}棟／${r.meshes.length}メッシュ</p>
-    ${bars}
+    ${bars}${oh}
     <h4>始められる分析</h4>${ans}
-    <h4>過去年度との比較</h4>${vh}
+    <h4>過去年度との比較</h4>${vh}${zh}
     <a class="open" href="${ds}" target="_blank" rel="noopener">G空間情報センターでこのデータセットを開く</a>`;
 }
 function select(code,scrollRow){
@@ -432,15 +451,17 @@ document.getElementById("attrs").innerHTML=ATTRS.map(([k,l])=>`<button data-a="$
 document.getElementById("attrs").onclick=e=>{const b=e.target.closest("button"); if(!b) return; st.a=b.dataset.a; writeHash(); paint(); detail();};
 document.getElementById("regions").onclick=e=>{const b=e.target.closest("button"); if(!b) return; st.r=b.dataset.r; writeHash(); zoomTo(st.r); paint();};
 document.getElementById("body").onclick=e=>{const tr=e.target.closest("tr[data-code]"); if(tr) select(tr.dataset.code,false);};
+document.getElementById("detail").onclick=e=>{const tr=e.target.closest(".offtab tr[data-code]"); if(tr) select(tr.dataset.code,false);};
 readHash();
 Promise.all([
   fetch("carte.json").then(r=>r.json()),
   fetch("names.json").then(r=>r.json()).catch(()=>({})),
   fetch("vintage.json").then(r=>r.json()).catch(()=>({})),
+  fetch("zipsize.json").then(r=>r.json()).catch(()=>({})),
   fetch("map.svg").then(r=>r.text())
-]).then(([d,names,v,mapText])=>{
+]).then(([d,names,v,zs,mapText])=>{
   rows=d.cities.map(c=>({...c,name:names[c.code]||"",pref:PREFS[c.code.slice(0,2)]||""}));
-  byCode=Object.fromEntries(rows.map(r=>[r.code,r])); vin=v;
+  byCode=Object.fromEntries(rows.map(r=>[r.code,r])); vin=v; zips=zs;
   const ps=[...new Set(rows.map(r=>r.code.slice(0,2)))].sort();
   document.getElementById("pref").innerHTML+=ps.map(p=>`<option value="${p}">${PREFS[p]||p}</option>`).join("");
   head(); render(); setupMap(mapText); detail();

@@ -48,6 +48,14 @@ def main():
             json.dumps(slim, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
         print("web/vintage.json を更新（%d件）" % len(slim))
 
+    # zip の大きさ。ビューアの詳細パネル「このデータを落とすと」に使う（[zip全体, うち建物] のバイト数）
+    zs = ROOT / "data" / "zip_sizes.json"
+    if zs.exists():
+        z = {c["code"]: [c["zipBytes"], c["bldgBytes"]]
+             for c in json.loads(zs.read_text(encoding="utf-8")) if c.get("status") == "ok"}
+        (ROOT / "web" / "zipsize.json").write_text(json.dumps(z, separators=(",", ":")), encoding="utf-8")
+        print("web/zipsize.json を更新（%d件）" % len(z))
+
     # デッキは自前の地図コピーを参照する。render_map は web/ にしか書かないので
     # ここで配布しないと、PDFだけ旧データの地図のまま出来上がる（実際にやった）
     # 応募デッキは公開リポジトリに含めないので、手元に award/deck がある場合だけ配る
